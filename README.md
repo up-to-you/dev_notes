@@ -1,2 +1,2 @@
-# dev_notes
-notes &amp; wiki
+### Local [Wiki](https://github.com/up-to-you/dev_notes/wiki)
+
