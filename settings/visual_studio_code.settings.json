@@ -1,0 +1,28 @@
+// common settings
+{
+    "workbench.statusBar.visible": false,
+    "window.menuBarVisibility": "toggle",
+    "workbench.sideBar.location": "right",
+    "workbench.activityBar.visible": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.minimap.enabled": false
+}
+// key bindings
+[
+    {
+        "key": "shift+alt+p",
+        "command": "workbench.action.editor.changeLanguageMode"
+    },
+    {
+        "key": "ctrl+k m",
+        "command": "-workbench.action.editor.changeLanguageMode"
+    },
+    {
+        "key": "ctrl+tab",
+        "command": "workbench.action.nextEditor"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.previousEditor"
+    }
+]

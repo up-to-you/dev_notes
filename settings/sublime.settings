@@ -1,0 +1,19 @@
+{
+	"animation_enabled": false,
+	"auto_complete_delay": 1,
+	"color_scheme": "Packages/Material Theme/schemes/Material-Theme-Darker.tmTheme",
+	"draw_white_space": "none",
+	"enable_hexadecimal_encoding": false,
+	"fallback_encoding": "Cyrillic (Windows 1251)",
+	"font_face": "",
+	"font_size": 11,
+	"hot_exit": false,
+	"hotd_exit": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"scroll_speed": 17.0,
+	"tree_animation_enabled": false,
+	"update_check": false
+}

@@ -1,0 +1,7 @@
+# pg_hba.conf
+# /etc/postgresql/$version/main/pg_hba.conf
+# or /opt/postgres/
+# or /usr/lib/postgresql/$version/*
+# this conf describes client authentication control
+# only for local non-secure access
+host    all             all             0.0.0.0/0                  trust
