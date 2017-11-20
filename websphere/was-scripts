@@ -3,4 +3,5 @@ locate wasservice.sh
 ./wasservice.sh -add nodeagent -serverName nodeagent -profilePath "../../../profiles/mngd" -logRoot "/u01/IBM/profiles/mngd/logs/nodeagent" -restart true -startType automatic
 
 
+
 #!
