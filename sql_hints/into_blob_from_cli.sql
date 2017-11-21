@@ -1,4 +1,5 @@
 DECLARE
+
 --   you can't declare large string literals in standard sql
 --   hence you should use pl/sql
   str VARCHAR2(32767);
