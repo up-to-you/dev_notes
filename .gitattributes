@@ -1,3 +1,4 @@
 * linguist-language=Shell
 /* linguist-language=Shell
 *.* linguist-language=Shell
+*.sql linguist-language=SQLPL
