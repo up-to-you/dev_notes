@@ -8,9 +8,9 @@ DECLARE
   some_raw_data SOME_TABLE.BLOB_COLUMN%TYPE;
 
 BEGIN
-  
+  str:='LONG_STRING'
 --   blob func requires raw (binary) data
-  some_raw_data:= utl_raw.cast_to_raw('LONG_STRING');
+  some_raw_data:= utl_raw.cast_to_raw(str);
 
   INSERT ALL
     INTO SOME_TABLE VALUES (blobVal)
