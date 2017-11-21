@@ -1,0 +1,8 @@
+# Websphere apps cache (some problems may refer to jit & aot) :
+# cached apps
+rm -r ~/profiles/$yourNode/temp/wscache/*
+
+# there are a lot of shit within temp dir, that might be deleted
+
+# installed apps
+rm -r ~/profiles/$yourNode/installedApps/$yourCell/*
