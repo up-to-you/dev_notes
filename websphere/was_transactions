@@ -1,0 +1,11 @@
+# if Websphere opposes to restore uncommited XA transactions, you should kick her ass out !
+
+# stop server, then truncate XA transaction logs, for dmgr
+cd ~/profiles/dmgr/tranlog/$yourCell/$yourNode/dmgr/transaction
+rm -r partnerlog/* && rm -r tranlog/*
+
+# for node
+cd ~/profiles/$yourNode/tranlog/$yourCell/$yourNode/npsServer/transaction
+rm -r partnerlog/* && rm -r tranlog/*
+
+# start server
