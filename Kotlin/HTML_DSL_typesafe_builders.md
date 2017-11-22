@@ -48,7 +48,81 @@ fun HTML.head(
 fun HTML.body(
 ```
 
-_this way compiler let you omit explicit declarations of extension functions "recievers"_
+_this way compiler let you declare functions with the same "recievers" type_
 
+<img src="assets/kotlin_html_builder.png">
 
+_another considiration is a inheritance, **the code below doesn't compile**, though it looks logically - "child lambda declaration with child reciever type"_
+
+```Java
+class HTMLChild(consumer: TagConsumer<*>) : HTML(emptyMap(), consumer)
+
+fun HTMLChild.customTag() {}
+
+createHTMLDocument().html {
+        customTag {
+            
+        }
+```
+_let's declare our custom tag (**this code compiles :-)**)_ :
+
+```Java
+class CUSTOMTAG(consumer: TagConsumer<*>) : HTML(emptyMap(), consumer) {
+    var specialField = true
+}
+
+fun DIV.customTag(block: CUSTOMTAG.() -> Unit) { CUSTOMTAG(consumer).visit(block) }
+
+fun FlowContent.div(classes : String? = null, block : DIV.() -> Unit = {}) : Unit = DIV(attributesMapOf("class", classes), consumer).visit(block)
+
+fun main(args: Array<String>) {
+    createHTMLDocument().html {
+        body {
+            div {
+                /*
+                * receiver of customTag function looks at receiver of div lambda function
+                * */
+                customTag { specialField = false }
+            }
+        }
+    }
+```
+_i.e. **DIV**.customTag looks at FlowContent.div(classes : String? = null, block : **DIV**.() -> Unit = {})_
+
+_And now with inheritance_ :
+
+```Java
+interface CUSTOMTAG_PARENT
+
+fun CUSTOMTAG_PARENT.funOfCustomTagParent(dummyLambda: () -> Unit) {}
+
+class CUSTOMTAG(consumer: TagConsumer<*>) : HTML(emptyMap(), consumer), CUSTOMTAG_PARENT {
+    var specialField = true
+}
+
+fun DIV.customTag(block: CUSTOMTAG.() -> Unit) { CUSTOMTAG(consumer).visit(block) }
+
+fun FlowContent.div(classes : String? = null, block : DIV.() -> Unit = {}) : Unit = DIV(attributesMapOf("class", classes), consumer).visit(block)
+
+fun main(args: Array<String>) {
+    createHTMLDocument().html {
+        body {
+            div {
+                /*
+                * receiver of customTag function looks at receiver of div lambda function
+                * */
+                customTag { specialField = false
+                    /*
+                    * funOfCustomTagParent receiver (CUSTOMTAG_PARENT.funOfCustomTagParent) 
+                    * is a Parent of customTag lambda's receiver ----> block: CUSTOMTAG.() -> Unit
+                    * */
+                    funOfCustomTagParent {
+                        
+                    }
+                }
+            }
+        }
+    }
+```
+_this approach helps to build typesafe DSL, that allows or restricts function declarations, using inheritance tree_
 
