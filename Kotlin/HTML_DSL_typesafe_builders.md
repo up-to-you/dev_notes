@@ -48,5 +48,7 @@ fun HTML.head(
 fun HTML.body(
 ```
 
-*this way compiler let you omit explicit declarations of extension functions "recievers" *
+_this way compiler let you omit explicit declarations of extension functions "recievers"_
+
+
 
