@@ -1,4 +1,4 @@
-### *HTML DSL (typesafe builders impl) under the hood*
+### HTML DSL (typesafe builders impl) under the hood
 
 _From JetBrain's article_ :
 
@@ -127,4 +127,7 @@ fun main(args: Array<String>) {
     }
 ```
 _this approach helps to build typesafe DSL, that allows or restricts function declarations, using inheritance tree_
+
+_So, than lambda's receiver type is closer to the root of the tree_ -
+_then less wariety of inner functions it can accept_
 
