@@ -131,4 +131,7 @@ _this approach helps to build typesafe DSL, that allows or restricts function de
 _So, than lambda's receiver type is closer to the root of the tree_ -
 _then less wariety of inner functions it can accept_
 
-_than extension function receiver is closer to the root - then to more variety of types it can be applicable_
+_And vice versa, than extension function receiver is closer to the root - then to more variety of types it can be applicable_
+
+_Because the "reciever" of inner extension function must be the type or parent-type of enclosed lambda's receiver_
+
