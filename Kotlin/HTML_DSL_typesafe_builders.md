@@ -133,5 +133,5 @@ _then less wariety of inner functions it can accept_
 
 _And vice versa, than extension function receiver is closer to the root - then to more variety of types it can be applicable_
 
-_Because the "reciever" of inner extension function must be the type or parent-type of enclosed lambda's receiver_
+_Because the "reciever" of inner extension function must be the type or parent-type of outer lambda's receiver_
 
