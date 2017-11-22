@@ -89,7 +89,7 @@ fun main(args: Array<String>) {
         }
     }
 ```
-_i.e. **DIV**.customTag looks at FlowContent.div(classes : String? = null, block : **DIV**.() -> Unit = {})_
+_i.e. **DIV**.customTag looks at outer lambda receiver FlowContent.div(classes : String? = null, block : **DIV**.() -> Unit = {})_
 
 _And now with inheritance_ :
 
@@ -127,6 +127,8 @@ fun main(args: Array<String>) {
     }
 ```
 _this approach helps to build typesafe DSL, that allows or restricts function declarations, using inheritance tree_
+
+<img src="assets/inheritance_tree.png" height="120px" width="270px">
 
 _So, than lambda's receiver type is closer to the root of the tree_ -
 _then less wariety of inner functions it can accept_
