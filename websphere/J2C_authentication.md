@@ -1,4 +1,4 @@
-*To get Authentication data entry (UserID/Password) via LoginContext, *
+*To get Authentication data entry (UserID/Password) via LoginContext,*
 
 *by performing lookup of J2C Authentication data ALIAS across different nodes -*
 
