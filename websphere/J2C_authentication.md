@@ -4,4 +4,4 @@
 
 *it's safer to prefix ALIAS name by corresponding Node name, i.e. yourNode/YOUR_J2C_ALIAS_NAME.*
 
-*And specify alias in code in the same way yourNode/YOUR_J2C_ALIAS_NAME.*
+*And specify alias in code the same way yourNode/YOUR_J2C_ALIAS_NAME.*
