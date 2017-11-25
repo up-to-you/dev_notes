@@ -1,4 +1,4 @@
-## CONCEPTS
+## Concepts
 
 - #### Lifecycle 
    - _Phase #1_
