@@ -1,3 +1,21 @@
+## Start / Stop cli
+
+###### auto-startup node/server example :
+```bash
+locate wasservice.sh
+
+./wasservice.sh -add nodeagent -serverName nodeagent -profilePath "../../../profiles/mngd" -logRoot "/u01/IBM/profiles/mngd/logs/nodeagent" -restart true -startType automatic
+```
+
+###### start sequence sample
+```bash
+/u01/IBM/profiles/dmgr/bin/startManager.sh && /u01/IBM/profiles/npsNode/bin/startNode.sh && /u01/IBM/profiles/npsNode/bin/startServer.sh npsServer
+```
+
+###### stop sequence sample
+```bash
+/u01/IBM/profiles/npsNode/bin/stopServer.sh npsServer && /u01/IBM/profiles/npsNode/bin/stopNode.sh && /u01/IBM/profiles/dmgr/bin/stopManager.sh
+```
 
 
 ## J2C Authentication
