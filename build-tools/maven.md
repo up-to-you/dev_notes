@@ -37,13 +37,11 @@ _E.g. :_
    - ###### clean
    - ###### post-clean
 
----
+## Multi-Module
 
 _In ***multi-module*** project Maven reactor determines the build order of modules (by modules sorting) and dependencies_
 
 _If A depends on B depends on C, obviously, the build order is C -> B -> A_
-
----
 
 ## Scopes
 
