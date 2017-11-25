@@ -1,3 +1,18 @@
+## Websphere apps caching
+#### Some problems may refer to jit / aot :
+
+###### cached apps
+```bash
+rm -r ~/profiles/$yourNode/temp/wscache/*
+```
+
+###### installed apps
+
+```bash
+rm -r ~/profiles/$yourNode/installedApps/$yourCell/*
+```
+#### _there are a lot of another shit within temp dir, that might be deleted_
+
 ## Start / Stop cli
 
 ###### auto-startup node/server example :
