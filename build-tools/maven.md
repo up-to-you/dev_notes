@@ -1,16 +1,19 @@
 ## Concepts
 
-- #### Lifecycle 
-   - _Phase #1_
-      - _goal #1_
-      - _goal #2_
-      - _goal #3_
-      - ...
-   - _Phase #2_
-      - _goal #1_
-      - _goal #2_
-      - ...
-   - ...
+```bash
+   Lifecycle #1
+         Phase #1
+               goal #1
+               goal #2
+               goal #3
+               ...
+         Phase #2
+               goal #1
+               goal #2
+               ...
+         ...
+```
+
    
 _E.g. :_
 
@@ -53,7 +56,7 @@ _If A depends on B depends on C, obviously, the build order is C -> B -> A_
 
 ***test*** - persists only for test phase, _NOT TRANSITIVE !_
 
-***system*** - available only on local machine at comile/runtime, doesn't persists in target bundle
+***system*** - available only on local machine at compile/runtime, doesn't persists in target bundle
 ```xml
          <dependency>
             <groupId>com.ibm</groupId>
