@@ -17,17 +17,19 @@
    
 _E.g. :_
 
-- #### Packaging (ear)
-   - _generate-resources_
-      - _ear:generate-application-xml_
-   - _process-resources_
-      - _resources:resources_ 
-   - _package_
-      - _ear:ear_ 
-   - _install_
-      - _install:install_ 
-   - _deploy_
-      - _deploy:deploy_ 
+```bash
+   Packaging (ear)
+         generate-resources
+               ear:generate-application-xml
+         process-resources
+               resources:resources
+         package
+               ear:ear
+         install
+               install:install
+         deploy
+               deploy:deploy
+```
 
 ###### _Obviously, phase like ```deploy``` may contains multiple goals, not only ```deploy:deploy```_
 
