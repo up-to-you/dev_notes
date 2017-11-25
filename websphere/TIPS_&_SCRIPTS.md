@@ -13,6 +13,22 @@ rm -r ~/profiles/$yourNode/installedApps/$yourCell/*
 ```
 #### _there are a lot of another shit within temp dir, that might be deleted_
 
+## WAS Transaction logs
+_if Websphere opposes to restore uncommited XA transactions, you can kick her ass out_
+_(hope uncommited transaction's doesn't mater) !_
+
+###### stop server, then truncate XA transaction logs, for dmgr
+```bash
+cd ~/profiles/dmgr/tranlog/$yourCell/$yourNode/dmgr/transaction
+rm -r partnerlog/* && rm -r tranlog/*
+```
+###### for node
+```bash
+cd ~/profiles/$yourNode/tranlog/$yourCell/$yourNode/npsServer/transaction
+rm -r partnerlog/* && rm -r tranlog/*
+```
+###### start server
+
 ## Start / Stop cli
 
 ###### auto-startup node/server example :
