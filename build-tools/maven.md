@@ -68,5 +68,8 @@ _If A depends on B depends on C, obviously, the build order is C -> B -> A_
             <systemPath>${project.basedir}/lib/com.ibm.mq.allclient.jar</systemPath>
          </dependency>
 ```
+## Inheritance
 
+_Child module inherits properties and plugins._ 
 
+_There is no mechanism to restrict props inheritance, but for plugins there is ```<inherited>false</inherited>``` declaration (in parent POM)_
