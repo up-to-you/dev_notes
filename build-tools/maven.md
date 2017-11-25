@@ -12,7 +12,7 @@
       - ...
    - ...
    
-_E.g._
+_E.g. :_
 
 - #### Packaging (ear)
    - _generate-resources_
