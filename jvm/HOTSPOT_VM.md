@@ -9,7 +9,15 @@ Example cmd for bundling (including jvm) javafx application :
 
 ### [javapackager](https://docs.oracle.com/javase/9/tools/javapackager.htm#JSWOR719)
 
-for jdk >= 9 uses jlink under the hood for stripping runtime bundle (requires correct javafx jar as input for -srcfiles cmd)
+for jdk >= 9 uses jlink under the hood for stripping runtime bundle
 
-**`javapackager -deploy -native image -outdir packages -outfile DesktopBootstrap -srcdir build -srcfiles out/artifacts/ams_fx/DesktopBootstrap.jar -appclass desktop.math.repair.model.DesktopBootstrap -name DesktopBootstrap -title DesktopBootstrap -verbose
+**`javapackager -deploy -native image -outdir packages -outfile DesktopBootstrap --module-path ./libs -srcfiles DesktopBootstrap.jar --module fx.desktop/desktop.math.repair.model.DesktopBootstrap -name DesktopBootstrap -title DesktopBootstrap -verbose
 `**
+
+`--module-path` - *directory with your modular jar*
+
+`-srcfiles` - *the modular jar itself*
+
+`--module` - *[module-name to add]/[main-class]*
+
+`-native` - *type of bundle*
