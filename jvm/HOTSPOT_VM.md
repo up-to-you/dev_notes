@@ -14,12 +14,8 @@ for jdk >= 9 uses jlink under the hood for stripping runtime bundle
 **`javapackager -deploy -native image -outdir packages -outfile DesktopBootstrap --module-path ./libs -srcfiles DesktopBootstrap.jar --module fx.desktop/desktop.math.repair.model.DesktopBootstrap -name DesktopBootstrap -title DesktopBootstrap -verbose
 `**
 
-`--module-path` - *directory with your modular jar*
-
-`-srcfiles` - *the modular jar itself*
-
-`--module` - *[module-name to add]/[main-class]*
-
-`-native` - *type of bundle*
-
+###### `--module-path` - directory with your modular jar
+###### `-srcfiles` - the modular jar itself
+###### `--module` - [module-name to add]/[main-class]
+###### `-native` - type of bundle
 ###### `-BshortcutHint=true` - desktop-icon creation for -native msi/exe
