@@ -21,3 +21,5 @@ for jdk >= 9 uses jlink under the hood for stripping runtime bundle
 `--module` - *[module-name to add]/[main-class]*
 
 `-native` - *type of bundle*
+
+###### `-BshortcutHint=true` - desktop-icon creation for -native msi/exe
