@@ -22,3 +22,10 @@ Oposite to previous wrong Dependency example, it is ok for Association to repres
 
 <img src="assets/right_association.png" width="30%" height="60px">
 
+- # Aggregation
+
+- # Composition
+
+- # Generalization
+
+- # Realization
