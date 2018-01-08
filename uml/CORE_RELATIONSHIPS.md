@@ -1,4 +1,3 @@
-
 - # Dependency
 <img src="assets/Dependency.png" width="70%" height="155px">
 
@@ -17,7 +16,9 @@ _**But it mustn't contain any member of type Employee**_.
 
 It is much like **Dependency** , but represents much stronger relationship.
 
-Oposite to previous wrong Dependency example, it is ok for Association to represent relationship as member variable:
+In this contrived case **Offer** object doesn't know anything about **Employee**, vice versa - only **Employee** knows about recieved offer, and correspondingly contain's an instance of **Offer** class as a member.
+
+Oposite to previous wrong Dependency example, it is ok for Association to represent relationship as a class member variable:
 
 <img src="assets/right_association.png" width="30%" height="60px">
 
