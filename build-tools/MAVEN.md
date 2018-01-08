@@ -31,16 +31,16 @@ _E.g. :_
                deploy:deploy
 ```
 
-###### _Obviously, phase like ```deploy``` may contains multiple goals, not only ```deploy:deploy```_
+##### _Obviously, phase like ```deploy``` may contains multiple goals, not only ```deploy:deploy```_
 
 ---
 
-###### Lifecycles : e.g. clean, compile, install, package, test-compile, test, integration-test
-###### Phases : e.g.
-- ###### Clean phase
-   - ###### pre-clean, clean, post-clean
-   - ###### clean
-   - ###### post-clean
+##### Lifecycles : e.g. clean, compile, install, package, test-compile, test, integration-test
+##### Phases : e.g.
+- ##### Clean phase
+   - ##### pre-clean, clean, post-clean
+   - ##### clean
+   - ##### post-clean
 
 ## Multi-Module
 
