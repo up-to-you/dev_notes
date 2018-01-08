@@ -10,5 +10,5 @@ Manager also can create an new instance of type Employee inside some factory met
 
 _**But it mustn't contain any member of type Employee**_.
 
-<img src="assets/Dependency.png" width="50%" height="140px">
+<img src="assets/wrong_dependency.png" width="50%" height="140px">
 
