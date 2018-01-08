@@ -24,9 +24,23 @@ Oposite to previous wrong Dependency example, it is ok for Association to repres
 
 - # Bidirectional Association
 
+<img src="assets/Bidirectional_association.png" width="55%" height="140px">
+
+Same as Direct Association, but every participant know's about each other.
+
 - # Aggregation
 
+<img src="assets/Aggregation.png" width="55%" height="140px">
+
+In practical application Aggregation means the collection or set of objects, whose state doesn't directly affect Aggregator.
+As example : the only state on which **amount (not students directly)** of Students can influence is "empty classroom" or "full classroom", but anyway Classroom with zero, half or full amount of students is still Classroom.
+
 - # Composition
+
+<img src="assets/Composition.png" width="55%" height="307px">
+
+The main feature of Composition  in contrast to Aggregation are Compositor members. Without at least one member - Compositor can't represents fully qualified Object, e.g. it's hard to call an object a modern Car without engine , body or axle.
+The set of objects like engine, body and axle represents modern Car.
 
 - # Generalization
 
