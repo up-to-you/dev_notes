@@ -44,4 +44,12 @@ The set of objects like engine, body and axle represents modern Car.
 
 - # Generalization
 
+<img src="assets/Generalization.png" width="17%" height="277px">
+
+Equals to class inheritance, i.e. keyword "extends", and fully represents it's meaning.
+
 - # Realization
+
+<img src="assets/Realization.png" width="55%" height="307px">
+
+Denotes interface realization ("implements") or in more abstract terms - realization of concrete api of interaction's.
