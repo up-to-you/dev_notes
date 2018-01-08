@@ -11,7 +11,7 @@ _**But it mustn't contain any member of type Employee**_.
 
 <img src="assets/wrong_dependency.png" width="30%" height="100px">
 
-- # Association
+- # Direct Association
 <img src="assets/Association.png" width="70%" height="155px">
 
 It is much like **Dependency** , but represents much stronger relationship.
@@ -21,6 +21,8 @@ In this contrived case **Offer** object doesn't know anything about **Employee**
 Oposite to previous wrong Dependency example, it is ok for Association to represent relationship as a class member variable:
 
 <img src="assets/right_association.png" width="30%" height="60px">
+
+- # Bidirectional Association
 
 - # Aggregation
 
