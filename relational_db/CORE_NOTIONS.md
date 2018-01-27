@@ -26,3 +26,24 @@ _In another words: if there are tuples with X value duplicates, then Y values sh
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 _However relational algebra doesn't allow tuple duplicates (if R = (X,Y,Z) and X=Y, then Z must be unique)._
+
+### Anomalies
+      dummy table:
+|vendor|product|address|
+|------|-------|--------|
+|A_prov|A_prod|A_addr|
+|A_prov|B_prod|A_addr|
+|B_prov|C_prod|C_addr|
+
+- **Redundancy anomaly**
+
+    _redundant repetition of address for single vendor_
+- **Anomaly of potential contradictions :**
+
+     _changing the address of single vendor entails update of every tuple where this vendor occur_
+- **Insertion anomaly**
+
+     _If vendor and product attributes represents composite key  =>  it is not possible to insert new vendor without products_
+- **Deletion anomaly**
+
+     _If vendor stopped supplying any product  =>  information about vendor will be erased too, during deletion of all his products_
