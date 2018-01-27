@@ -27,6 +27,17 @@ _In another words: if there are tuples with X value duplicates, then Y values sh
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 _However relational algebra doesn't allow tuple duplicates (if R = (X,Y,Z) and X=Y, then Z must be unique)._
 
+### Armstrong's axioms
+- **Reflexivity**
+                  
+                  if (X -> Y && Z ⊆ Y) then X -> Z
+- **Augmentation**
+
+                  if (X -> Y) then XZ -> YZ
+- **Transitivity**
+
+                  if (X -> Y && Y -> Z) then X -> Z
+
 ### Anomalies
       dummy table:
 |vendor|product|address|
