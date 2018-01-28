@@ -17,3 +17,4 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
 |7-gen     |7700k|
 |8-gen     |8550u|
 
+## 2NF
