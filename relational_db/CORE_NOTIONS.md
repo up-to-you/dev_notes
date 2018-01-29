@@ -14,7 +14,7 @@ _set of unique attributes that represent table in rdb_
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 _set of unique attributes that represent whole rdb scheme with multiple tables_
 
-### Functional dependence
+### Functional dependency
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 _Is denoted as X -> Y._
 
@@ -39,7 +39,10 @@ _In another words: if there are tuples with X value duplicates, then Y values sh
       |-|-|
       |A|B|
       |A|C|
-      
+
+### Irreducible Functional dependency
+_X -> Y is **Irreducible Functional dependency** if for every subset of X : { Z ⊂ X }, { Z !-> Y = true }_
+
 ### Armstrong's axioms
 - **Reflexivity**
                   
