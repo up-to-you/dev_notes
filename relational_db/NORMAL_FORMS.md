@@ -103,16 +103,32 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
       
 - ***Example:***
   
-  |MODEL_SERIES|L2_CACHE  |PERFORMANCE_GAIN|
-  |------------|----------|----------------|
-  |7-series    |6MB       |6%              |
-  |7-series    |4MB       |4%              |
-  |6-series    |2MB       |2%              |
-  |5-series    |4MB       |3%              |
-  |4-series    |1MB       |1%              |
+  |MODEL_SERIES|L2_CACHE  |PERFORMANCE_GAIN|POWER_CONSUMPTION|
+  |------------|----------|----------------|----------------|
+  |7-series    |6MB       |6%              |40W             |
+  |7-series    |4MB       |4%              |40W             |
+  |6-series    |2MB       |2%              |45W             |
+  |5-series    |4MB       |3%              |50W             |
+  |4-series    |1MB       |1%              |35W             |
   
+  - _Potential **composite** key pairs :_
+      - _X = (MODEL_SERIES, L2_CACHE); X -> PERFORMANCE_GAIN, POWER_CONSUMPTION_
+      - _X = (L2_CACHE, POWER_CONSUMPTION); X -> MODEL_SERIES, PERFORMANCE_GAIN_
+  - _PERFORMANCE_GAIN has unique values, so it can define any other attribute, according to FD definition_
+  - _KEY (MODEL_SERIES, POWER_CONSUMPTION) out of consideration, since this FD doesn't define anything (moreover if it could - this FD is **reducible**)_ 
+
+  ***The main problem is POWER_CONSUMPTION :***
   
+  _which fall under non-key attribute and POWER_CONSUMPTION -> MODEL_SERIES occurs. This FD breaks BCNF._
   
+  ***The solution is the same as for 2NF and 3NF - allocation of POWER_CONSUMPTION -> MODEL_SERIES into another table.***
   
+  |MODEL_SERIES|L2_CACHE  |PERFORMANCE_GAIN|POWER_CONSUMPTION|
+  |------------|----------|----------------|----------------|
+  |7-series    |6MB       |6%              |40W             |
+  |7-series    |4MB       |4%              |40W             |
+  |6-series    |2MB       |2%              |45W             |
+  |5-series    |4MB       |3%              |50W             |
+  |4-series    |1MB       |1%              |35W             |
   
   
