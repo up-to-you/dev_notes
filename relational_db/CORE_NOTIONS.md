@@ -24,9 +24,22 @@ _Functional dependence exists if there is no such tuple where the attribute valu
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 _In another words: if there are tuples with X value duplicates, then Y values should also be duplicated._
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-_However relational algebra doesn't allow tuple duplicates (if R = (X,Y,Z) and X=Y, then Z must be unique)._
+- _However, need to pay attention to:_ 
+    - _relational algebra doesn't allow tuple duplicates (if R = (X,Y,Z) and X=Y, then Z must be unique)._
+    - _following example is a valid FD = X -> Y:_
+    
+      |X|Y|
+      |-|-|
+      |A|C|
+      |B|C|
 
+    - _following example is an **INVALID** FD = X -> Y:_
+    
+      |X|Y|
+      |-|-|
+      |A|B|
+      |A|C|
+      
 ### Armstrong's axioms
 - **Reflexivity**
                   
