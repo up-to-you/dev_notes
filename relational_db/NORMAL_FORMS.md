@@ -88,5 +88,31 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   
 ## 3NF+ (Boyce–Codd NF) 
 ###### 3NF + :
+
+  _There is one condition, when 3NF scheme has several anomalies:_
+  
+  _If there are **2 and more Composite keys** and they have at least **one shared attribute**._
+  
+  _In such situation scheme has: Redundancy anomaly, Anomaly of potential contradictions, Insertion anomaly, Deletion anomaly._
+  
+  _3NF without anomalies known as Boyce–Codd NF._
+  
+  _Relationship scheme is in **Boyce–Codd NF** if every irreducible FD X -> Y from F satisfies following condition:_
+  
+      X -> Y ∈ F and X - is a key!
+      
+- ***Example:***
+  
+  |MODEL_SERIES|L2_CACHE  |PERFORMANCE_GAIN|
+  |------------|----------|----------------|
+  |7-series    |6MB       |6%              |
+  |7-series    |4MB       |4%              |
+  |6-series    |2MB       |2%              |
+  |5-series    |4MB       |3%              |
+  |4-series    |1MB       |1%              |
+  
+  
+  
+  
   
   
