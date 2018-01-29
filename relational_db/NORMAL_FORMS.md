@@ -140,3 +140,17 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   
 ## 4NF
 ###### BCNF + :
+
+- _Table souldn't have multivalued dependencies._
+  
+  |PRODUCER|MODEL|INTEL_LAPTOPS|
+  |--------|-----|-----------------|
+  |Intel   |7700 |Acer|
+  |Intel   |7820 |Acer|
+  |Intel   |7700 |Lenovo|
+  |Intel   |7820 |Lenovo|
+  
+  _Suppose (PRODUCER, MODEL, INTEL_LAPTOPS) is a primary key._
+  _If intel releases new cpu model 7920, we should insert 2 new tuples (Intel, 7920, Acer) and (Intel, 7920, Lenovo) to keep data consistent (because Acer and Lenovo can be equipped with Intel processors)._
+  _
+  
