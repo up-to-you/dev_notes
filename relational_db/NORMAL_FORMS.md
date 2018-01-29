@@ -18,11 +18,12 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
 |8-gen     |8550u|
 
 ## 2NF
+###### 1NF + :
 - ***Strict definition:***
 
-  _relationship scheme is in 2NF if there is no attributes set X,Y,H such that:_
+  _relationship scheme is in **2NF** if there is no attributes set X,Y,H such that:_
   
-  _[X = key],  [Y ⊂ X],  [H != Y && H = non-key attribute]_
+  _[X = key],  [**Y ⊂ X**],  [H != Y && H = non-key attribute]_
   
   - _X -> Y_
   - _Y -> H_
@@ -55,5 +56,37 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   |Intel   |89...   |
   |Intel   |89...   |
   |AMD     |97...   |
+  
+## 3NF
+###### 2NF + :
+- ***Strict definition***
+
+  _relationship scheme is in **3NF** if there is no attributes set X,Y,H such that:_
+  
+  _[X = key],  [**Y ⊂ R**],  [H != Y && H = non-key attribute]_
+  
+  - _X -> Y_
+  - _Y -> H_
+  - _Y !-> X_
+  
+- ***Logical definition***
+
+  _every non-key attribute must depends on key attribute in **non-transitive** way._
+  
+  |Model|L2_Cache|Performance_Gain|
+  |----------|-----|-----|
+  |7700hq    |6    |4%   |
+  |7820hq    |4    |2%   |
+  |8550u     |4    |2%   |
+  |Ryzen-7   |6    |4%   |
+  
+  _(Model) -> (L2_Cache) and (L2_Cache) -> (Performance_Gain), therefore using third Armstrong's axiom we have (Model) -> (Performance_Gain)._
+  
+  _This is a **transitive** FD!_
+  
+  _We should use the same approach as for 2NF normalization: Performance_Gain attribute should be allocated into another table **to achive Third Normal Form**._
+  
+## 3NF+ (Boyce–Codd NF) 
+###### 3NF + :
   
   
