@@ -123,12 +123,20 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   
   ***The solution is the same as for 2NF and 3NF - allocation of POWER_CONSUMPTION -> MODEL_SERIES into another table.***
   
-  |MODEL_SERIES|L2_CACHE  |PERFORMANCE_GAIN|POWER_CONSUMPTION|
-  |------------|----------|----------------|----------------|
-  |7-series    |6MB       |6%              |40W             |
-  |7-series    |4MB       |4%              |40W             |
-  |6-series    |2MB       |2%              |45W             |
-  |5-series    |4MB       |3%              |50W             |
-  |4-series    |1MB       |1%              |35W             |
+  |MODEL_SERIES|POWER_CONSUMPTION|
+  |----------------|----------------|
+  |7-series    |40W             |
+  |6-series    |45W             |
+  |5-series    |50W             |
+  |4-series    |35W             |
   
+  |MODEL_SERIES|L2_CACHE  |PERFORMANCE_GAIN|
+  |------------|----------|----------------|
+  |7-series    |6MB       |6%              |
+  |7-series    |4MB       |4%              |
+  |6-series    |2MB       |2%              |
+  |5-series    |4MB       |3%              |
+  |4-series    |1MB       |1%              |
   
+## 4NF
+###### BCNF + :
