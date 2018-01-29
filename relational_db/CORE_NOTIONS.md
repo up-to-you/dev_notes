@@ -42,7 +42,6 @@ _In another words: if there are tuples with X value duplicates, then Y values sh
 
 ### Irreducible Functional dependency
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 - _X -> Y is **Irreducible Functional dependency** if for every subset of X :_
 
             if Z ⊂ X then Z !-> Y
