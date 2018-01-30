@@ -1,3 +1,5 @@
+[4NF](#4NF)  
+
 ## 1NF
 All values must be _"atomic"_ (i.e. cell should contains single, not multivalued structures).
 ```diff
@@ -139,7 +141,8 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   |4-series    |1MB       |1%              |
   
 ## 4NF
-###### BCNF + :
+<a name="4NF"/>
+###### BCNF + :         
 
 - _Table souldn't have multivalued dependencies._
   
@@ -154,7 +157,9 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   
   _If intel releases new cpu model 7920, we should insert 2 new tuples (Intel, 7920, Acer) and (Intel, 7920, Lenovo) to keep data consistent (because both, Acer and Lenovo can be equipped with Intel processors)._
   
-  _**The solution is simple:** decomposition into 2 separated tables : [MODEL -> CPU_PRODUCER] and [LAPTOPS -> CPU_PRODUCER]_
+  _**The solution is simple:** decomposition into 2 separated tables :_
+  - [MODEL -> CPU_PRODUCER] and 
+  - [LAPTOPS -> CPU_PRODUCER]
 
 ## 5NF
 ###### 4NF + :  
