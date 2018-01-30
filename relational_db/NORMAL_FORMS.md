@@ -6,8 +6,11 @@
 - **[5NF](#5NF)**
 
 ## 1NF
+
 <a name="1NF"/>
 All values must be _"atomic"_ (i.e. cell should contains single, not multivalued structures).
+
+
 ```diff
 - Failed 1NF:
 ```
