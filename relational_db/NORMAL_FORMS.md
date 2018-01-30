@@ -8,6 +8,7 @@
 ## 1NF
 
 <a name="1NF"/>
+
 All values must be _"atomic"_ (i.e. cell should contains single, not multivalued structures).
 
 
@@ -29,7 +30,9 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
 |8-gen     |8550u|
 
 ## 2NF
+
 <a name="2NF"/>
+
 ###### 1NF + :
 - ***Strict definition:***
 
@@ -70,7 +73,9 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   |AMD     |97...   |
   
 ## 3NF
+
 <a name="3NF"/>
+
 ###### 2NF + :
 - ***Strict definition***
 
@@ -100,7 +105,9 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   _We should use the same approach as for 2NF normalization: Performance_Gain attribute should be allocated into another table **to achive Third Normal Form**._
   
 ## 3NF+ (Boyce–Codd NF) 
+
 <a name="BCNF"/>
+
 ###### 3NF + :
 
   _There is one condition, when 3NF scheme has several anomalies:_
@@ -153,7 +160,9 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   |4-series    |1MB       |1%              |
   
 ## 4NF
+
 <a name="4NF"/>
+
 ###### BCNF + :         
 
 - _Table souldn't have multivalued dependencies._
@@ -174,7 +183,46 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   - [LAPTOPS -> CPU_PRODUCER]
 
 ## 5NF
+
 <a name="5NF"/>
+
 ###### 4NF + :  
 
+_Table is in 5NF if it can be decomposed into smaller tables without join loss_
+
+_i.e. :_
+
+  |CPU_PRODUCER|SERIES|L2_CACHE|
+  |--------|-----|-----------------|
+  |Intel   |7-series|4MB|
+  |Intel   |8-series|4MB|
+  |Intel   |8-series|6MB|
+  |AMD     |R-series|4MB|
+
+  **R1**
+  
+  |CPU_PRODUCER|MODEL|
+  |------------|-----|
+  |Intel       |7-series|
+  |Intel       |8-series|
+  |AMD         |R-series|
+  
+  **R2**
+  
+  |SERIES|L2_CACHE|
+  |--------|--------|
+  |7-series|4MB     |
+  |8-series|4MB     |
+  |8-series|6MB     |
+  |R-series|4MB     |
+  
+  **R3**
+  
+  |CPU_PRODUCER|L2_CACHE|
+  |--------|-----|
+  |Intel   |4MB  |
+  |Intel   |6MB  |
+  |AMD     |4MB  |
+  
+  
   
