@@ -1,6 +1,12 @@
-[4NF](#4NF)  
+- **[1NF](#1NF)**
+- **[2NF](#2NF)**
+- **[3NF](#3NF)**
+- **[BCNF](#BCNF)**
+- **[4NF](#4NF)**
+- **[5NF](#5NF)**
 
 ## 1NF
+<a name="1NF"/>
 All values must be _"atomic"_ (i.e. cell should contains single, not multivalued structures).
 ```diff
 - Failed 1NF:
@@ -20,6 +26,7 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
 |8-gen     |8550u|
 
 ## 2NF
+<a name="2NF"/>
 ###### 1NF + :
 - ***Strict definition:***
 
@@ -60,6 +67,7 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   |AMD     |97...   |
   
 ## 3NF
+<a name="3NF"/>
 ###### 2NF + :
 - ***Strict definition***
 
@@ -89,6 +97,7 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   _We should use the same approach as for 2NF normalization: Performance_Gain attribute should be allocated into another table **to achive Third Normal Form**._
   
 ## 3NF+ (Boyce–Codd NF) 
+<a name="BCNF"/>
 ###### 3NF + :
 
   _There is one condition, when 3NF scheme has several anomalies:_
@@ -162,6 +171,7 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   - [LAPTOPS -> CPU_PRODUCER]
 
 ## 5NF
+<a name="5NF"/>
 ###### 4NF + :  
 
   
