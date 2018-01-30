@@ -191,6 +191,8 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
 _Table is in 5NF if it can be decomposed into smaller tables without join loss_
 
 _i.e. :_
+  
+  **R0**
 
   |CPU_PRODUCER|SERIES|L2_CACHE|
   |--------|-----|-----------------|
@@ -223,6 +225,29 @@ _i.e. :_
   |Intel   |4MB  |
   |Intel   |6MB  |
   |AMD     |4MB  |
+
+  _R2 ⋈ R3 = R4_
   
+  **R4**
   
+  |SERIES|L2_CACHE|CPU_PRODUCER|
+  |------|--------|------------|
+  |7-series| 4mb |INTEL |
+  |7-series| 4mb |AMD |
+  |8-series| 4mb |INTEL | 
+  |8-series| 4mb |AMD |
+  |8-series| 6mb |INTEL |
+  |r-series| 4mb |INTEL | 
+  |r-series| 4mb |AMD | 
+  
+  _R1 ⋈ R4 = R5_
+
+  ***R5 = R0 (Q.E.D.)***
+
+  |CPU_PRODUCER|SERIES|L2_CACHE|
+  |--------|-----|-----------------|
+  |Intel   |7-series|4MB|
+  |Intel   |8-series|4MB|
+  |Intel   |8-series|6MB|
+  |AMD     |R-series|4MB|
   
