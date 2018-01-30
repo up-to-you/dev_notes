@@ -201,6 +201,8 @@ _i.e. :_
   |Intel   |8-series|6MB|
   |AMD     |R-series|4MB|
 
+        R0 decomposition into (R1, R2, R3) :
+
   **R1**
   
   |CPU_PRODUCER|MODEL|
@@ -225,6 +227,8 @@ _i.e. :_
   |Intel   |4MB  |
   |Intel   |6MB  |
   |AMD     |4MB  |
+
+        Checking join loss :
 
   _R2 ⋈ R3 = R4_
   
