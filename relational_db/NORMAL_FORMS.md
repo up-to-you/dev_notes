@@ -57,9 +57,10 @@ All values must be _"atomic"_ (i.e. cell should contains single, not multivalued
   |Intel   |7820hq    |1500 |89...   |
   |Intel   |8550u     |1400 |89...   |
   |AMD     |Ryzen-7   |900  |97...   |
+  |AMD     |7700hq    |950  |97...   |
   
   _Suppose (Producer, Model) is a Composite Key and (Producer, Model) -> (Price), where Price is non-key attribute._
-  _(note that theoretically Intel and AMD may have same name for CPU Model, but different price, thus Model -> Price can lead to ambigious relationship)_ 
+  _(**note that theoretically Intel and AMD may have same name for CPU Model, but different price**, thus Model -> Price can lead to ambigious relationship)_ 
   
   _(Producer) -> (Phone) - this is a **failure for 2NF**! (Producer, Model) -> (Phone) is **reducible** to (Producer) -> (Phone) !_
   
