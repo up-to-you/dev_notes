@@ -30,9 +30,9 @@ _optimizer logic :_
 3. Hash calculation of larger table is produced.
 4. If hash-bucket's h(a) value is not equal, then none of records inside bucket are equal.
 
-It is very important that the smaller table fit in available memory. The cost will be reduced dramatically,
+_It is very important that the smaller table fit in available memory. The cost will be reduced dramatically,_
 
-because asymptotically it will equal to a single data read of two tables.
+_because asymptotically it will equal to a single data read of two tables._
 
 ### SORT MERGE JOIN
 
