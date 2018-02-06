@@ -32,7 +32,7 @@ _optimizer logic :_
 
 _It is very important that the smaller table fit in available memory. The cost will be reduced dramatically,_
 
-_because asymptotically it will equal to a single data read of two tables._
+_because asymptotically it will be equal to a single data read of two tables._
 
 ### SORT MERGE JOIN
 
