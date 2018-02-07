@@ -37,6 +37,14 @@ _because asymptotically it will be equal to a single data read of two tables._
 ### SORT MERGE JOIN
 
 _usage conditions :_
+- join conditions are inequalities (<=, >=, <, >)
+- join-columns are allready sorted ***OR*** sorting is required in other query's operations
 
 _optimizer logic :_
+
+_Need to notice, that ***hash join*** is applicable only for equality conditions and in most cases is better then sort merge join._
+
+1. Sorting by join-column is performed.
+2. Compare is performed such that:
+
 
