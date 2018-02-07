@@ -40,6 +40,8 @@ _usage conditions :_
 - join conditions are inequalities (<=, >=, <, >)
 - join-columns are allready sorted ***OR*** sorting is required in other query's operations
 
+_Need to notice, that ***hash join*** is applicable only for equality conditions and in most cases is better then sort merge join._
+
 _optimizer logic :_
 
 
