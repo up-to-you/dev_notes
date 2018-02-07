@@ -42,7 +42,7 @@ _usage conditions :_
 
 _optimizer logic :_
 
-_Need to notice, that ***hash join*** is applicable only for equality conditions and in most cases is better then sort merge join._
+
 
 1. Sorting by join-column is performed.
 2. Compare is performed such that:
