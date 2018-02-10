@@ -47,7 +47,6 @@ _optimizer logic :_
 1. Sorting by join-column is performed.
 2. Compare is performed such that:
      - two pointers (A,B) are set to joininable tables
-     - if (A < B) => A pointer moves on the next row (for A > B, logic is mirrored)
+     - if (A < B) => A pointer moves on the next row (for A > B, logic is mirrored)
      - if (A = B) => row falls into the result table
-     - if (A > B) => B pointer moves on the next row, etc.
-
+     - if (A > B) => B pointer moves on the next row, etc.
