@@ -17,3 +17,8 @@
 
 ## Removed
 - _**lifecycle:** fetched from database **->** marked for deletion **(removed state)** **->** actually removed from database during commit_
+
+### [ DETACHED -> PERSISTENT ] TRANSFER PROBLEM:
+_eM.merge(detachedEntity) method actually will persist new data to db if there were some changes during Detached state. And you can't call refresh() method on Detached entities. Sadly, there is no 'attach()' method._
+
+_So, the only valuable solution is to find this Entity in database by getting id from old Detached entity._
