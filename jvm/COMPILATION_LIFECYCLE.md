@@ -1,6 +1,6 @@
 ### This page contains the layer of abstraction for brevity and understanding
 
-1. &nbsp; ***Comilation step***
+**1.** &nbsp; ***Comilation step***
 
 _source_code &nbsp; ==`javac`=> &nbsp; byte_code_
 
@@ -48,3 +48,14 @@ public void setBar(java.lang.String);
    5:   return
 }
 ```
+Example of bytecode mapping into Machine Instructions (opcodes) in hexidecimal format:
+
+| Mnemonic        | Opcode (hex) | Description |
+| ------------- |-------------|------|
+| aload_0      | 2a | loads a reference onto the stack from local variable 0 |
+| invokespecial      | b7      |   invoke instance method on object reference requiring special handling (instance initialization method, a private method, or a superclass method), where the method is identified by method reference index in constant pool |
+| areturn | b0      |    returns a reference from a method |
+| getfield | b4      |    gets a field value of an object reference, where the field is identified by field reference in the constant pool index |
+| putfield | b5      |    `getfield` opposite  |
+
+
