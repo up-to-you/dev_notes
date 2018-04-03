@@ -48,7 +48,7 @@ public void setBar(java.lang.String);
    5:   return
 }
 ```
-Example of bytecode mapping into Machine Instructions (opcodes) in hexidecimal format:
+_Example of bytecode mapping into Machine Instructions (opcodes) in hexidecimal format:_
 
 | Mnemonic        | Opcode (hex) | Description |
 | ------------- |-------------|------|
