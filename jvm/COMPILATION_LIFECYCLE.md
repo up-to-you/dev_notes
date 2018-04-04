@@ -8,11 +8,11 @@ _Bytecode is an intermediate representation, that can be mapped almost one-to-on
 
 _One of the main benefits of Java bytecode in contrast to other languages is similarity to real machine instructions (opcodes)._
 
-_Thus, it is much easy to interpret bytecode into machine instructions and optimise it for performance gain._
+_Thus, it is much easy to interpret bytecode into machine instructions and optimise it for performance gain,_
 
 _which allows to implement cross-platform code, by using platform-specific interpreter for concrete OS._
 
-_In a nutshell, Virtual Machine simulates Physical Machine behavior and execution of instructions, therefore called ***Virtual***._
+_In a nutshell, Virtual Machine simulates Physical Machine instructions execution behavior, therefore called ***Virtual***._
 
 ```java
 public class Foo {
