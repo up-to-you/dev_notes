@@ -4,11 +4,11 @@
 
 _source_code &nbsp; ==`javac`=> &nbsp; byte_code_
 
+_Bytecode is an intermediate representation, that can be mapped almost one-to-one into machine opcodes,_
+
 _One of the main benefits of Java bytecode in contrast to other languages is similarity to real machine instructions (opcodes)._
 
 _Thus, it is much easy to interpret bytecode into machine instructions and optimise it for performance gain._
-
-_Bytecode is an intermediate representation, that can be mapped almost one-to-one into machine opcodes,_
 
 _which allows to implement cross-platform code, by using platform-specific interpreter for concrete OS._
 
