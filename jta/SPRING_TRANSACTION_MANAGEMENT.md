@@ -10,3 +10,29 @@
 |_REQUIRES_NEW_|Always new + supend outer transaction|
 |_NESTED_|Logical new transaction via **savepoints** , outer + nested = single physical in database|
 
+Spring follows the pattern **session-per-request**, such that two sequential Spring Transactions will be performed in a single Hibernate Session, however on database level - every Spring Transaction represents separated Physical DB Transaction, that uses its own connection:
+
+```java
+@RequestMapping(value = "/transaction")
+public void performTransaction() {
+    // single hiber session and thread for both
+    firstService.invokeFirstTransaction();
+    secondService.invokeSecondTransaction();
+}
+@Transactional
+void invokeFirstTransaction() {
+    // Hiber SessionID = 1
+    // Current Thread = 1
+    
+    // DB Connection = 1
+    // DB Transaction ID = 1
+}   
+@Transactional
+void invokeSecondTransaction() {
+    // Hiber SessionID = 1
+    // Current Thread = 1
+    
+    // DB Connection = 2
+    // DB Transaction ID = 2
+}
+```
