@@ -110,5 +110,35 @@ void invokeInnerTransaction() {
 }
 ```
 
-**NESTED** - 
+**NESTED** - invokes "_nested_" logical transaction via **savepoints** (in fact is single DB Physical Transaction). Requires JDBC 3.0+. Hibernate doesn't support nested transaction, due to lack of **savepoints** transaction management implementation. However its available via configuration below, that brings Spring-tx implementation:
+```java
+    @Bean
+    public PlatformTransactionManager setDataSource(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+```
+SavePoints allow to rollback part of single transaction to specific savepoint, thus rollback of it part doesn't affects whole transaction.
 
+```java
+@RequestMapping(value = "/transaction")
+public void performTransaction() {
+    service.invokeOuterTransaction();
+}
+@Transactional
+void invokeOuterTransaction() {
+    // Hiber SessionID = 1
+    // Current Thread = 1
+    
+    // DB Connection = 1
+    // DB Transaction ID = 1
+    invokeInnerTransaction();
+}   
+@Transactional(Propagation.NESTED)
+void invokeInnerTransaction() {
+    // Hiber SessionID = 1
+    // Current Thread = 1
+    
+    // DB Connection = 1 (but performs separated query for SavePoint) 
+    // DB Transaction ID = 1
+}
+```
