@@ -10,6 +10,22 @@
 |_REQUIRES_NEW_|Always new + supend outer transaction|
 |_NESTED_|Logical new transaction via **savepoints** , outer + nested = single physical in database|
 
+By default, Spring @Transactional method propagates same Session and same Physical transaction to nested inner methods, for which @Transactional annotation is not mandatory. 
+
+```java
+@RequestMapping(value = "/transaction")
+public void performTransaction() {
+    service.invokeTransaction();
+}
+@Transactional
+void invokeTransaction() {
+    invokeInner();
+}   
+void invokeInner() {
+    // Same Hiber SessionID, Thread, Connection, TransactionID
+}
+```
+
 Spring follows the pattern **session-per-request**, such that two sequential Spring Transactions will be performed in a single Hibernate Session, however on database level - every Spring Transaction represents separated Physical DB Transaction, that uses its own connection:
 
 ```java
@@ -36,3 +52,31 @@ void invokeSecondTransaction() {
     // DB Transaction ID = 2
 }
 ```
+**REQUIRES_NEW** - is a logical separation of two transactions. Outer transaction got suspended, while Inner transaction creates new Session and correspondingly gets new Connection from pool. Both invokes in a single thread.
+
+```java
+@RequestMapping(value = "/transaction")
+public void performTransaction() {
+    service.invokeOuterTransaction();
+}
+@Transactional
+void invokeOuterTransaction() {
+    // Hiber SessionID = 1
+    // Current Thread = 1
+    
+    // DB Connection = 1
+    // DB Transaction ID = 1
+    invokeInnerTransaction();
+}   
+@Transactional(Propagation.REQUIRES_NEW)
+void invokeInnerTransaction() {
+    // Hiber SessionID = 2
+    // Current Thread = 1
+    
+    // DB Connection = 2
+    // DB Transaction ID = 2
+}
+```
+
+**NESTED** - 
+
