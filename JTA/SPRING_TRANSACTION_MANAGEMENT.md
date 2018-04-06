@@ -26,6 +26,36 @@ void invokeInner() {
 }
 ```
 
+It's worth to mention, that there is no way to invoke new "_nested_" physical transaction inside Spring/Hiber managed transaction. Hibernate will check allready active transaction bounded to current thread and will throw Exception if any exists.
+
+```java
+@RequestMapping(value = "/transaction")
+public void performTransaction() {
+    service.invokeTransaction();
+}
+@Transactional
+void invokeTransaction() {
+    var session = (Session) entityManager.getDelegate();
+    // Exception !
+    session.beginTransaction();
+}
+
+/*** OR ***/
+
+@Transactional
+void invokeTransaction() {
+    invokeInner();
+}
+@Transactional(Propagation.NOT_SUPPORTED)
+void invokeInner() {
+    var session = (Session) entityManager.getDelegate();
+    // Anything is ok, since there is Propagation.NOT_SUPPORTED, that suspends outer transaction
+    session.beginTransaction();
+    // Exception, since there is allready active transaction !
+    session.beginTransaction();
+}
+```
+
 Spring follows the pattern **session-per-request**, such that two sequential Spring Transactions will be performed in a single Hibernate Session, however on database level - every Spring Transaction represents separated Physical DB Transaction, that uses its own connection:
 
 ```java
