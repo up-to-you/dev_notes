@@ -10,6 +10,8 @@
 |_REQUIRES_NEW_|Always new + supend outer transaction|
 |_NESTED_|Logical new transaction via **savepoints** , outer + nested = single physical in database|
 
+#### all tests got performed using Spring 5 / Hibernate 5
+
 By default, Spring @Transactional method propagates same Session and same Physical transaction to nested inner methods, for which @Transactional annotation is not mandatory. 
 
 ```java
