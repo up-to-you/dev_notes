@@ -46,3 +46,22 @@ $$
         RETURN result;
     END;
 $$ LANGUAGE plpgsql;
+
+-- //////////////////////////////////////////////////
+
+CREATE OR REPLACE FUNCTION GET_MIN_MAX(arr INTEGER[])
+    RETURNS TABLE(min INTEGER, max INTEGER)
+AS
+$$
+    DECLARE
+        result INTEGER[];
+    BEGIN
+        SELECT ARRAY(
+            SELECT DISTINCT unnest(arr) ORDER BY 1
+        ) INTO result;
+
+        RETURN QUERY SELECT result[1], result[array_length(result, 1)];
+    END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM GET_MIN_MAX((SELECT array_agg(weight) FROM air_plane));
