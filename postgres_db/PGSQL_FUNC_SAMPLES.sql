@@ -65,3 +65,35 @@ $$
 $$ LANGUAGE plpgsql;
 
 SELECT * FROM GET_MIN_MAX((SELECT array_agg(weight) FROM air_plane));
+
+-- //////////////////////////////////////////////////
+
+CREATE OR REPLACE FUNCTION MIN_MAX(arr INTEGER[], val INTEGER)
+    RETURNS INTEGER[]
+AS
+$$
+    BEGIN
+        arr = val || arr;
+        RAISE NOTICE '%', arr;
+        RETURN (SELECT ARRAY[min, max] FROM GET_MIN_MAX(arr));
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION MID_VALUE(arr INTEGER[])
+    RETURNS FLOAT
+AS
+$$
+    BEGIN
+        RETURN (arr[2] - arr[1]) / 2;
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE AGGREGATE MIDDLE(INTEGER) (
+    SFUNC = MIN_MAX,
+    STYPE = INTEGER[],
+    FINALFUNC = MID_VALUE
+);
+
+SELECT MIDDLE(weight) FROM air_plane;
+
+-- //////////////////////////////////////////////////
