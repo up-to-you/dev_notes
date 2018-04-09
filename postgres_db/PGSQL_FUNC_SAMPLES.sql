@@ -97,3 +97,28 @@ CREATE AGGREGATE MIDDLE(INTEGER) (
 SELECT MIDDLE(weight) FROM air_plane;
 
 -- //////////////////////////////////////////////////
+
+CREATE OR REPLACE VIEW HIGH_WEIGHTED_AIRPLANES AS
+    SELECT * FROM air_plane WHERE weight > 1100
+    ORDER BY weight;
+
+CREATE OR REPLACE FUNCTION INSERT_HIGH_WEIGHTED_AIRPLANES()
+RETURNS TRIGGER
+AS
+$function$
+    BEGIN
+        IF tg_op = 'INSERT' THEN
+            INSERT INTO air_plane VALUES (NEW.ID, NEW.producer, NEW.model, NEW.weight, NEW.capacity);
+            RETURN NEW;
+        END IF;
+    END;
+$function$ LANGUAGE plpgsql;
+
+CREATE TRIGGER INSERT_HIGH_WEIGHTED_AIRPLANES_VIEW
+    INSTEAD OF INSERT ON HIGH_WEIGHTED_AIRPLANES
+    FOR EACH ROW EXECUTE PROCEDURE INSERT_HIGH_WEIGHTED_AIRPLANES();
+
+INSERT INTO HIGH_WEIGHTED_AIRPLANES VALUES (20, 'BOEING', '7-7007', 2700, 2300);
+COMMIT ;
+
+-- //////////////////////////////////////////////////
