@@ -122,3 +122,15 @@ INSERT INTO HIGH_WEIGHTED_AIRPLANES VALUES (20, 'BOEING', '7-7007', 2700, 2300);
 COMMIT ;
 
 -- //////////////////////////////////////////////////
+
+CREATE OR REPLACE FUNCTION INSERT_BOEING_AIR_PLANE(model CHARACTER VARYING, weight INTEGER, capacity INTEGER)
+    RETURNS VOID
+AS
+$$
+    BEGIN
+        EXECUTE format('INSERT INTO AIR_PLANE VALUES ((SELECT MAX(ID) + 1 FROM AIR_PLANE), $1, $2, $3, $4)')
+                                                                            USING 'BOEING', model, weight, capacity;
+    END;
+$$ LANGUAGE plpgsql;
+
+-- //////////////////////////////////////////////////
