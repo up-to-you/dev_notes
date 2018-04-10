@@ -134,3 +134,23 @@ $$
 $$ LANGUAGE plpgsql;
 
 -- //////////////////////////////////////////////////
+
+CREATE OR REPLACE FUNCTION abort_drop()
+  RETURNS event_trigger
+AS
+$$
+    BEGIN
+        RAISE NOTICE '%',tg_tag;
+
+        IF(tg_tag = 'DROP TABLE') THEN
+            RAISE EXCEPTION 'COMMAND % IS DISABLED !!!!! ', tg_tag;
+        END IF;
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE EVENT TRIGGER abort_ddl ON ddl_command_start
+   EXECUTE PROCEDURE abort_drop();
+
+DROP TABLE air_plane;
+
+-- //////////////////////////////////////////////////
