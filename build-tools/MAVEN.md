@@ -38,7 +38,7 @@ _E.g. :_
 ##### Lifecycles : e.g. clean, compile, install, package, test-compile, test, integration-test
 ##### Phases : e.g.
 - ##### Clean phase
-   - ##### pre-clean, clean, post-clean
+   - ##### pre-clean
    - ##### clean
    - ##### post-clean
 
