@@ -1,11 +1,15 @@
 // common settings
 {
+    "git.ignoreMissingGitWarning": true,
+   
     "workbench.statusBar.visible": false,
-    "window.menuBarVisibility": "toggle",
     "workbench.sideBar.location": "right",
     "workbench.activityBar.visible": false,
+    "editor.minimap.enabled": false,
+    "window.zoomLevel": -1,
     "workbench.startupEditor": "newUntitledFile",
-    "editor.minimap.enabled": false
+
+    "telemetry.enableTelemetry": false
 }
 // key bindings
 [
