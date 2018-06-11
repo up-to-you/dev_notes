@@ -17,3 +17,6 @@
                   Full GC, evict entire Heap, Metaspace
 ```
 
+#### Minor GC
+
+<img src="assets/jvm_memory_model.png">
