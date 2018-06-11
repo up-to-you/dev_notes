@@ -36,7 +36,7 @@ Now, all reachable objects are located at `S1` and Survivor's spaces should be s
 
 After every `Minor GC` iteration, reachable object's `age` increments by 1.
 
-There is `MaxTenuringThreshold` JVM option (by default = 15), upon reaching of which objects promots to `Tenured` space.
+There is `MaxTenuringThreshold` JVM option (by default = 15), upon reaching of which objects promotes to `Tenured` space.
 
 #### Major GC
 
