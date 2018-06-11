@@ -12,9 +12,9 @@
       if(Threshold is reached)
           move to Tenured
           if(Tenured is full)
-              Major GC, evict Tenured
+              Major GC, scan Tenured
               if(Heap is over)
-                  Full GC, evict entire Heap, Metaspace
+                  Full GC, scan entire Heap, Metaspace
 ```
 
 #### Minor GC
