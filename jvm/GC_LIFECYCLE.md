@@ -34,3 +34,14 @@ Now, all reachable objects are located at `S1` and Survivor's spaces should be s
 
 <img src="assets/gc_3.png">
 
+After every `Minor GC` iteration, reachable object's `age` increments by 1.
+
+There is `MaxTenuringThreshold` JVM option (by default = 15), upon reaching of which objects promots to `Tenured` space.
+
+#### Major GC
+
+`Major GC` triggers when `Tenured` space is filled and therefore scans `Tenured` space for eligible objects.
+
+#### Full GC
+
+`Full GC` is triggered when there is no free space at heap and JVM trying to cope with this situation by scanning entire `Heap` and `Meta Space` too. If there is no objects on the heap related to specific class on the `Meta Space` then `Full GC` evicts this class objects from `Meta Space`.
