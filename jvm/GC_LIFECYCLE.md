@@ -30,7 +30,7 @@ After transfer completed, GC can easely throw out entire area of unreachable obj
 
 Now, all reachable objects are located at `S1` and Survivor's spaces should be swapped for the next `Minor GC` iteration, i.e. aftewards,`Minor GC` will scan `Eden` and `S1` for reachable objects.
 
-`Eden` space will be filled again and the previous step will be repeated. 
+`Eden` space will be filled again and the previous step will be repeated. Reachable objects will be transfered from `Eden` and `S1` to empty `S0` space.
 
 <img src="assets/gc_3.png">
 
