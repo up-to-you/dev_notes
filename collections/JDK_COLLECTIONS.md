@@ -37,4 +37,4 @@ Represents `Red-Black Tree`. Asymptotic time for all operations is `log(n)`. Ele
 Access and addition time is `O(1)`. `Hashcode` should distribute elements smoothly in buckets for better performance. `HashCode` is used to determine bucket and `equals` to distinguish elements in a bucket (elements in a bucket are stored  in `Linked List`).
 
 ### TreeMap
-As a `TreeSet` all operations time complexity is `log(n)`. Keys are stored in a `NATURAL ORDER` by default or via Comparator for custom order.
+As a `TreeSet` all operations time complexity is `log(n)`. Keys are stored in a `NATURAL ORDER` by default or in a custom order via custom Comparator.
