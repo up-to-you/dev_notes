@@ -25,12 +25,16 @@ Doubly-linked list. Worst access time is N/2, since iteration can be start from 
 Access by index is `O(1)`, since back-store is a simple array. Actually it is a very efficient data structure for most use cases. Adding an element in the middle of array requires shifting the rest of the array using native `System.arraycopy`. Benchmarks shows, that `System.arraycopy` is about two times faster than `O(n)` `for` loop.
 
 ### HashSet
-There is no guarantee for elements order to be persisted during time, since it is based on hash allocation. Access and addition time is `O(1)`, but worst access time is `O(n)` in case when all elements has the same `hashcode` (all elements will fall into a single bucket).
+There is no guarantee for elements order to be persisted during time, since it is based on hash allocation. Access and addition time is `O(1)`, but worst access time is `O(n)` in case when all elements has the same `hashcode` (all elements will fall into a single bucket). Uses `HashMap` keyset as a backing store.
 
 ### LinkedHashSet
-Keeps elements in order of adding. Asymptotically has same time complexity as `HashSet`, but constant factor is much higher for addition, since it uses additional `Linked List` for order maintenance.
+Keeps elements in order of adding. Asymptotically has the same time complexity as `HashSet`, but constant factor is much higher for addition, since it uses additional `Linked List` for order maintenance.
 
 ### TreeSet
-Represents `Red-Black Tree`. Asymptotic time for all operations is `log(n)`. Elements are soted by default in `NATURAL ORDER`. There is a constructor with Comparator argument for custom order.
+Represents `Red-Black Tree`. Asymptotic time for all operations is `log(n)`. Elements are soted by default in `NATURAL ORDER`. There is a constructor with Comparator argument for custom order. Uses `TreeMap` keyset as a backing store.
 
-### 
+### HashMap
+Access and addition time is `O(1)`. `Hashcode` should distribute elements smoothly in buckets for better performance. `HashCode` is used to determine bucket and `equals` to distinguish elements in a bucket (elements in a bucket are stored  in `Linked List`).
+
+### TreeMap
+As a `TreeSet` all operations time complexity is `log(n)`. Keys are stored in a `NATURAL ORDER` by default or via Comparator for custom order.
