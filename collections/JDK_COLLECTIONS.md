@@ -22,4 +22,4 @@ Differs from standard FIFO queue such that - allows to store elements in `NATURA
 Doubly-linked list. Worst access time is N/2, since iteration can be start from both sides. It is very ineffective collection due to objects allocation and their references. During elements addition object instances can be scattered across heap, therefore it is less likely that multiple elements will fall into processor's cache within single read operation from RAM memory.
 
 ### ArrayList
-Uses array as a back-store. Access by index is `O(1)`, since back-store is a simple array. Actually it is a very efficient data structure for most use cases. Adding an element in the middle of array requires shifting the rest of the array using native `System.arraycopy`. Benchmarks shows, that `System.arraycopy` is about two times faster than `O(n)` `for` loop.
+Access by index is `O(1)`, since back-store is a simple array. Actually it is a very efficient data structure for most use cases. Adding an element in the middle of array requires shifting the rest of the array using native `System.arraycopy`. Benchmarks shows, that `System.arraycopy` is about two times faster than `O(n)` `for` loop.
