@@ -48,5 +48,38 @@ class InsertionSort {
     }
 }
 ```
+#### Selection Sort
+Selection Sort is a simplest algorithm: average time is equal to `(n^2) / 2` , but there are less memory modification operations in comparison to `Insertion Sort`.
+
+Every inner `f` loop is seeking for minimal element in the entire array and puts it at the first index,
+then it seeking for the next minimal element in the rest of the array `(array.length - current i)` and puts it in the second index from the start of the array, and so on...
+
+
+```java
+class SelectionSort {
+    static void sort(int[] target) {
+        for(int i = 0; i < target.length; i++) {
+            int minIdx = i;
+
+            for(int f = i + 1; f < target.length; f++) {
+                if(target[f] < target[minIdx]) {
+                    minIdx = f;
+                }
+            }
+
+            if(minIdx != i) {
+                swap(target, i, minIdx);
+            }
+        }
+    }
+
+    private static void swap(int[] target, int from, int to) {
+        int temp = target[from];
+        target[from] = target[to];
+        target[to] = temp;
+    }
+}
+```
+
 #### Merge Sort
 
