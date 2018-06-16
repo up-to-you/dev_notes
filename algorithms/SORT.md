@@ -82,6 +82,8 @@ class SelectionSort {
 ```
 #### Quick Sort
 
+Average time is `n*log(n)`, since on the average - the tree (which forms from the recursive calls) is near balanced, therefore it's depth is about `log(n)` , however, on every level of the tree we iterate over every element of array (no matter it is `2 * arr/2` or `4 * arr/4` , the sum is `n` - iterations), thus the complexity is `log(n) * n`.
+
 ```java
 class QuickSort {
 
