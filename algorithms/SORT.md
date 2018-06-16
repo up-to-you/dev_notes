@@ -80,6 +80,8 @@ class SelectionSort {
     }
 }
 ```
+#### Quick Sort
+
 
 #### Merge Sort
 
