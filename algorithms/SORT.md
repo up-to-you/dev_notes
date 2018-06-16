@@ -82,6 +82,51 @@ class SelectionSort {
 ```
 #### Quick Sort
 
+```java
+class QuickSort {
+
+    static void sort(int[] target) {
+        quickSort(target, 0, target.length - 1);
+    }
+
+    private static void quickSort(int[] target, int start, int end) {
+        /* stop signal for recursion, that there are at least 2 elements to sort */
+        if(start < end) {
+            int pivotIdx = partSort(target, start, end);
+
+            /* sort left side from pivot */
+            quickSort(target, start, pivotIdx - 1);
+            /* sort right side from pivot */
+            quickSort(target, pivotIdx, end);
+        }
+    }
+
+    private static int partSort(int[] target, int start, int end) {
+        int pivotIdx = (start + end) / 2;
+
+        while (start < end) {
+            while (target[start] < target[pivotIdx]) {
+                start++;
+            }
+            while (target[end] > target[pivotIdx]) {
+                end--;
+            }
+
+            swap(target, start, end);
+            start++;
+            end--;
+        }
+
+        return start;
+    }
+
+    private static void swap(int[] target, int from, int to) {
+        int temp = target[from];
+        target[from] = target[to];
+        target[to] = temp;
+    }
+}
+```
 
 #### Merge Sort
 
