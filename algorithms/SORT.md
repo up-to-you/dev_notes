@@ -132,3 +132,68 @@ class QuickSort {
 
 #### Merge Sort
 
+Average time is `n*log(n)`. `Merge Sort` has a huge benefit compared to `Quick Sort` - it's worst time is `n*log(n)`.
+While `Quick Sort` can produce unbalanced tree (during selection of worst pivot every time, leading to `n^2`), the `Merge Sort` worst case just increase constant factor in the asymptotic estimate.
+
+Worst case is achieved by producing the maximum number of comparisons between `left` and `right` parts (i.e. `tmp[lPoint] < tmp[rPoint]`).
+
+
+```java
+class MergeSort {
+    /* During merge operations we produce inserts into target array,
+       therefore it is necessary to have a separate array,
+       that will contains numbers from current level of recursive tree
+       for further comparisons. Merge op can't be done using single array,
+       since during inserts it is easy to lose an item from the current insert index. */
+    private static int[] tmp;
+
+    static void sort(int[] target) {
+        tmp = new int[target.length];
+        mergeSort(target, 0, target.length - 1);
+    }
+
+    private static void mergeSort(int[] target, int left, int right) {
+        if(left < right) {
+            int middle = left + (right - left) / 2;
+
+            mergeSort(target, left, middle);
+            mergeSort(target, middle + 1, right);
+
+            merge(target, left, middle, right);
+        }
+    }
+
+    private static void merge(int[] target, int left, int middle, int right) {
+        copy(target, left, right);
+
+        int targetPoint = left;
+
+        int lPoint = left;
+        int rPoint = middle + 1;
+
+        while (lPoint <= middle && rPoint <= right) {
+            target[targetPoint++] =
+                    tmp[lPoint] < tmp[rPoint] ?
+                            tmp[lPoint++] :
+                            tmp[rPoint++];
+        }
+
+        /* if all elements from right side are smaller than element at current lPoint,
+            then all elements from lPoint to middle (inclusive) are greater,
+            and we should push them sequentially to target array */
+        while (lPoint <= middle) {
+            target[targetPoint++] = tmp[lPoint++];
+        }
+        /* same as above, only vice versa */
+        while (rPoint <= right) {
+            target[targetPoint++] = tmp[rPoint++];
+        }
+    }
+
+    /* copy elements to the tmp array from the current level of tree */
+    private static void copy(int[] target, int from, int to) {
+         int length = to - from + 1;
+         System.arraycopy(target, from, tmp, from, length);
+    }
+}
+```
