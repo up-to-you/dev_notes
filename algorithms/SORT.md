@@ -27,7 +27,7 @@ class BubbleSort {
 
 #### Insertion Sort
 
-Logic: Loop `i` -> take `key` that resides on `i` index and check if elements before `key` are higher than `key`, is fo - push those elements one place forward to free up place for `key` element.
+Logic: Loop `i` -> take `key` that resides on `i` index and check if elements before `key` are higher than `key`, if so - push those elements one place forward to free up place for `key` element.
 
 Average: `(n^2) / 4`, in comparison to `Bubble Sort` - inner loop is not just half of array length, it is `half * half`, since `key` can be placed in the middle of the inner loop index.
 
