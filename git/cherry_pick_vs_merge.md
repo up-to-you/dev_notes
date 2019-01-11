@@ -7,7 +7,7 @@ Then it compares conflicting lines of latest commit in each branch with `parent`
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 The problems described below have the same root cause: cherry-pick doesn't propagate `history of changes`, thus implicitly leads to a situations with better chance for `merge` conflicts. 
 
-## A-B-A ISSUE :
+### A-B-A ISSUE :
 
 <img src="assets/aba_issue.png" height="370px" width="770px">
 
