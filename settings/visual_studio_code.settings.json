@@ -1,7 +1,7 @@
 // common settings
 {
     "git.ignoreMissingGitWarning": true,
-   
+       
     "workbench.statusBar.visible": false,
     "workbench.sideBar.location": "right",
     "workbench.activityBar.visible": false,
@@ -9,7 +9,8 @@
     "window.zoomLevel": -1,
     "workbench.startupEditor": "newUntitledFile",
 
-    "telemetry.enableTelemetry": false
+    "telemetry.enableTelemetry": false,
+    "window.menuBarVisibility": "toggle"
 }
 // key bindings
 [
