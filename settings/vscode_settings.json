@@ -1,0 +1,11 @@
+{
+   "editor.minimap.enabled": false,
+    "window.menuBarVisibility": "toggle",
+    "workbench.sideBar.location": "right",
+    "workbench.activityBar.visible": false,
+    "window.zoomLevel": 1,
+    "python.jediEnabled": false,
+
+    "editor.fontFamily": "'Fira Code Retina'",
+    "workbench.colorTheme": "Monokai"
+}
