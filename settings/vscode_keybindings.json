@@ -1,6 +1,6 @@
 // key bindings
 [
-    {
+     {
         "key": "shift+alt+p",
         "command": "workbench.action.editor.changeLanguageMode"
     },
@@ -90,7 +90,7 @@
         "when": "editorTextFocus && !editorReadonly"
     },
     {
-        "key": "alt+\\",
+        "key": "ctrl+q",
         "command": "editor.action.showHover",
         "when": "editorTextFocus"
     },
@@ -98,5 +98,9 @@
         "key": "ctrl+k ctrl+i",
         "command": "-editor.action.showHover",
         "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+q",
+        "command": "-workbench.action.quit"
     }
 ]
