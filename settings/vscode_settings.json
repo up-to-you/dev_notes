@@ -7,5 +7,6 @@
     "python.jediEnabled": false,
 
     "editor.fontFamily": "'Fira Code Retina'",
-    "workbench.colorTheme": "Monokai"
+    "workbench.colorTheme": "Monokai",
+    "python.linting.pylintArgs": ["--generate-members"]
 }
