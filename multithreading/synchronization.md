@@ -20,8 +20,8 @@ Most of the time (during Biased and Thin lock states) JVM utilize `CAS` CPU inst
   markOop rebiased_prototype = 
   markOopDesc::encode((JavaThread*) THREAD, mark->age(), prototype_header->bias_epoch());
   ```
-* **For Thin-lock** (lightweight, not biased, contention is not too high) : share/runtime/synchronizer.cpp:347
-
+* **For Thin-lock** (lightweight, not biased, contention is not too high) : share/runtime/synchronizer.cpp:347  
+(CAS mechanics the same as for Biased-lock)
 
 * **For Flat-lock** (Inflated - OS based) : share/runtime/objectMonitor.cpp:270  
 (CAS thread pointer, that currently is owning the lock, share/runtime/objectMonitor.hpp:152)  
