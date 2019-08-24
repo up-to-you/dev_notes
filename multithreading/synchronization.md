@@ -8,7 +8,7 @@ Every class object or corresponding instance of a class contains object header `
 *mark word* `markOop _mark` and  
 *class word (describes class object)*.
 
-Last two bits in *mark word* denote current type of Lock mechanism, that depends on `contention` of threads over this object (being a monitor).
+Last two bits in *mark word* denotes current type of Lock mechanism, that depends on `contention` of threads over this object (being a monitor).
 
 Most of the time (during Biased and Thin lock states) JVM utilize `CAS` CPU instruction for internal implementation of optimized Locking.  
 
