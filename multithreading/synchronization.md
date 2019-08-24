@@ -8,8 +8,11 @@ This flag helps to accomplish `mutual exclusion`. `Mutual exclusion` describes t
 Every class object or corresponding instance of a class in JVM contains specialized two bits reserved for this flag. Hotspot and OpenJDK implementations use optimized `CAS` CPU instruction to update the state of this two bits (flag). 
 
 
-Every mainstream OS provides such functionality as mutex (called `futex` in Linux), however in high-level languages like Java `system-call` is expensive enough to compete with `CAS`, which can be directly compiled by `intrinsic` (http://javaagile.blogspot.com/2012/07/why-system-calls-are-slow.html).
+Every mainstream OS provides such functionality as mutex (called `futex` in Linux), however `system-call` is expensive enough to compete with `CAS`, which can be directly compiled by `intrinsic` (http://javaagile.blogspot.com/2012/07/why-system-calls-are-slow.html).
 
+
+
+[lock-mechanics.md](lock-mechanics.md)
 --- cooperation, spin-lock, spin-wait
 
 #### Monitor
