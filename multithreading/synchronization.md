@@ -31,7 +31,7 @@ Every mainstream OS provides such functionality as mutex (called `futex` in Linu
 
 
 
-[lock-mechanics.md](lock-mechanics.md)
+[lock-mechanics.md](lock-mechanics.md) ??? need to describe Adaptive Spinning Support
 
 #### Monitor
---- cooperation, spin-lock, spin-wait
+--- cooperation, (spin-lock, spin-wait as common approaches)
