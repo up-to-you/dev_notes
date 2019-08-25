@@ -17,10 +17,10 @@ There is another issue in threads synchronization called `Contention`.
 
 Having only **Mutex** on hand, there are only two common ways to achieve multithreaded synchronization:
 1. by using `futex` system-calls with `FUTEX_WAIT`, such that `contended` threads will be put to sleep and further thread awakening is costly.
-2. by simply spinning threads, such that `contended` threads will burn a lot of CPU cycles.
+2. by simply spinning threads (Spin-Lock), such that `contended` threads will burn a lot of CPU cycles. Also, simple Spin-Lock may lead to Thread starvation.
 
 
-More on that how lock is implemented in JVM:  
+More on that how lock is implemented in JVM along with Adaptive Spinning:  
 [lock-mechanics.md](lock-mechanics.md)
 
 #### Monitor
