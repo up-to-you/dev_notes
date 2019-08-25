@@ -11,7 +11,9 @@ This flag helps to accomplish `mutual exclusion`. `Mutual exclusion` describes t
 
 Every mainstream OS provides such functionality as mutex (called `futex` in Linux), however `system-call` is expensive enough to compete with `CAS`, which can be directly compiled by `intrinsic` (http://javaagile.blogspot.com/2012/07/why-system-calls-are-slow.html).
 
-[lock-mechanics.md](lock-mechanics.md) ??? need to describe Adaptive Spinning Support
+
+More on that how lock is implemented in JVM:  
+[lock-mechanics.md](lock-mechanics.md)
 
 #### Monitor
 --- cooperation, (spin-lock, spin-wait as common approaches)
