@@ -13,7 +13,7 @@ Every mainstream OS provides such functionality as mutex (called `futex` in Linu
 Most modern multithreading libraries rely on `CAS` CPU instruction for implementing mutex-like feature. 
 
 
-**Mutex** as a term, doesn't provide any functionality like threads cooperation or mechanism that tells other threads to wait until certain condition is met.
+Mutex as a term, doesn't provide any functionality like threads cooperation or mechanism that tells other threads to wait until certain condition is met.
 
 
 #### Monitor
