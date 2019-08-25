@@ -9,19 +9,20 @@ Safe flag value modification is achieved by CPU instructions, such as `LOCK`.
 `LOCK` is a prefix feature (e.g. `LOCK CMPXCHG`, `CMPXCHG` - compare and exchange) which protects a single instruction while holding other threads for the duration of that single instruction.
 
 
-Every mainstream OS provides such functionality as mutex (called `futex` in Linux), however `system-call` is expensive enough to compete with `CAS`, which can be directly compiled by `intrinsic` (http://javaagile.blogspot.com/2012/07/why-system-calls-are-slow.html).
+Every mainstream OS provides such functionality as mutex (called `futex` in Linux, however `futex` itself provides much more functionality than simple mutex). To use such OS-specific synchronization primitives, out application need to perform `system-call`, which is expensive (http://javaagile.blogspot.com/2012/07/why-system-calls-are-slow.html).  
+Most modern multithreading libraries rely on `CAS` CPU instruction for implementing mutex-like feature. 
 
 
-There is another issue in threads synchronization called `Contention`.  
-`Contention` denotes the state, when multiple threads trying to access resource, that currently acquired and locked by another thread.  
-
-Having only **Mutex** on hand, there are only two common ways to achieve multithreaded synchronization:
-1. by using `futex` system-calls with `FUTEX_WAIT`, such that `contended` threads will be put to sleep and further thread awakening is costly.
-2. by simply spinning threads (Spin-Lock), such that `contended` threads will burn a lot of CPU cycles. Also, simple Spin-Lock may lead to Thread starvation.
+**Mutex** as a term, doesn't provide any functionality like threads cooperation or mechanism that tells other threads to wait until certain condition is met.
 
 
 More on that how lock is implemented in JVM along with Adaptive Spinning:  
 [lock-mechanics.md](lock-mechanics.md)
 
 #### Monitor
---- cooperation, (spin-lock, spin-wait as common approaches)
+
+Monitor provides both: locking and cooperation mechanics.  
+Cooperation mechanics are implementation specific (e.g. using `futex` with `FUTEX_WAIT` on Threads, that are currently trying to acquire already locked mutex).
+
+
+#### Semaphore
