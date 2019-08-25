@@ -26,3 +26,14 @@ Most of the time (during Biased and Thin lock states) JVM utilize `CAS` CPU inst
 
 
 ??? need to describe Adaptive Spinning Support
+
+
+
+There is another issue in threads synchronization called `Contention`.  
+`Contention` denotes the state, when multiple threads trying to access resource, that currently acquired and locked by another thread.  
+
+Having only **Mutex** on hand, there are only two common ways to achieve multithreaded synchronization:
+1. by using `futex` system-calls with `FUTEX_WAIT`, such that `contended` threads will be put to sleep and further thread awakening is costly.
+2. by simply spinning threads (Spin-Lock), such that `contended` threads will burn a lot of CPU cycles. Also, simple Spin-Lock may lead to Thread starvation.
+
+spin-wait ???
