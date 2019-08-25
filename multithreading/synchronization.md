@@ -12,7 +12,13 @@ Safe flag value modification is achieved by CPU instructions, such as `LOCK`.
 Every mainstream OS provides such functionality as mutex (called `futex` in Linux), however `system-call` is expensive enough to compete with `CAS`, which can be directly compiled by `intrinsic` (http://javaagile.blogspot.com/2012/07/why-system-calls-are-slow.html).
 
 
-Bare Mutex is not enough for complete synchronization. 
+There is another issue in threads synchronization called `Contention`.  
+`Contention` denotes the state, when multiple threads trying to access resource, that currently acquired and locked by another thread.  
+Having only **Mutex** on hand, there are only two common ways to achieve multithreaded synchronization:
+1. by using `futex` system-calls with `FUTEX_WAIT`, such that `contended` threads will be put to sleep and further thread awakening is costly.
+2. by simply spinning threads, such that `contended` threads will burn a lot of CPU cycles.
+
+Bare Mutex is not enough for complete synchronization. Spinning
 Thread contention
 
 FUTEX_WAIT
