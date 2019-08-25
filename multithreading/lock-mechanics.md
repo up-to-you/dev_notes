@@ -22,3 +22,7 @@ Most of the time (during Biased and Thin lock states) JVM utilize `CAS` CPU inst
 
 * **For Flat-lock** (Inflated - OS based) : share/runtime/objectMonitor.cpp:270  
 (CAS thread pointer, that currently is owning the lock, share/runtime/objectMonitor.hpp:152) 
+
+
+
+??? need to describe Adaptive Spinning Support
