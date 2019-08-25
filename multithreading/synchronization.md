@@ -1,7 +1,7 @@
 ### Mutex / Lock, Monitor, Semaphore
 
 #### Mutex / Lock
-Mutex (or Lock) is an OS-specific structure, that helps to implement basic primitive synchronization across Threads and even Processes. Mutex can be represented simply as flag (single bit, which takes values: 0, 1).  
+Mutex (or Lock) is an OS-specific structure (https://github.com/torvalds/linux/blob/master/include/linux/mutex.h), that helps to implement basic primitive synchronization across Threads and even Processes. In general, mutex can be represented simply as a flag (single bit, which takes values: 0, 1).  
 
 This flag helps to achieve `mutual exclusion`. `Mutual exclusion` describes the property in concurrent programming, such that, given the two threads T1, T2: T2 will never access critical part of data, while T1 is working on it. 
 
