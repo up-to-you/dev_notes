@@ -26,14 +26,75 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 * `epoch` - the number of rebiase operations performed on object.
 * `Thread id` - current ID of owner (i.e. Thread).
 
-*Source code samples:*    
+`src/hotspot/share/runtime/biasedLocking.hpp : `
 
-* **For Biased-lock** : share/runtime/biasedLocking.cpp:670  
-(CAS whole markWord [share/oops/oop.hpp:59 => share/oops/markOop.hpp:104] for newer rebiasedPrototype)
-  ```C++
+```code
+// The basic observation is that in HotSpot's current fast locking
+// scheme, recursive locking (in the fast path) causes no update to
+// the object header. The recursion is described simply by stack
+// records containing a specific value (NULL). Only the last unlock by
+// a given thread causes an update to the object header.
+//
+// This observation, coupled with the fact that HotSpot only compiles
+// methods for which monitor matching is obeyed (and which therefore
+// can not throw IllegalMonitorStateException), implies that we can
+// completely eliminate modifications to the object header for
+// recursive locking in compiled code, and perform similar recursion
+// checks and throwing of IllegalMonitorStateException in the
+// interpreter with little or no impact on the performance of the fast
+// path.
+//
+// The basic algorithm is as follows (note, see below for more details
+// and information). A pattern in the low three bits is reserved in
+// the object header to indicate whether biasing of a given object's
+// lock is currently being done or is allowed at all.  If the bias
+// pattern is present, the contents of the rest of the header are
+// either the JavaThread* of the thread to which the lock is biased,
+// or NULL, indicating that the lock is "anonymously biased". The
+// first thread which locks an anonymously biased object biases the
+// lock toward that thread. If another thread subsequently attempts to
+// lock the same object, the bias is revoked.
+//
+// Because there are no updates to the object header at all during
+// recursive locking while the lock is biased, the biased lock entry
+// code is simply a test of the object header's value. If this test
+// succeeds, the lock has been acquired by the thread. If this test
+// fails, a bit test is done to see whether the bias bit is still
+// set. If not, we fall back to HotSpot's original CAS-based locking
+// scheme. If it is set, we attempt to CAS in a bias toward this
+// thread. The latter operation is expected to be the rarest operation
+// performed on these locks. We optimistically expect the biased lock
+// entry to hit most of the time, and want the CAS-based fallthrough
+// to occur quickly in the situations where the bias has been revoked.
+```
+`fast path` refers to JIT optimized code block, while `slow path` describes native C++ interpreter.
+
+`Fast path is a term used in computer science to describe a path with shorter instruction path length through a program compared to the 'normal'(i.e. slow-path) path.`
+
+*"... the biased lock entry code is simply a test of the object header's value. If this test succeeds, the lock has been acquired by the thread. If this test fails, a bit test is done to see whether the bias bit is still set ..."*   
+<=  
+describes, that second thread, which comes to acquire already biased lock will cause biased thread test to fail, such that bias will be revoked  
+=>  
+*"If another thread subsequently attempts to lock the same object, the bias is revoked"*
+
+**Slow path** source code:  
+`share/runtime/biasedLocking.cpp:670`  
+CAS whole markWord `share/oops/oop.hpp:59 => share/oops/markOop.hpp:104` for newer rebiasedPrototype:
+```C++
   markOop rebiased_prototype = 
-  markOopDesc::encode((JavaThread*) THREAD, mark->age(), prototype_header->bias_epoch());
+     markOopDesc::encode((JavaThread*) THREAD, mark->age(), prototype_header->bias_epoch());
+     markOop res_mark = obj->cas_set_mark(rebiased_prototype, mark);
+        if (res_mark == biased_value) {
+          return BIAS_REVOKED_AND_REBIASED;
   ```
+
+-----------------------------
+????? thin / lightweight lock
+
+*Source code samples:*    
+* **For Biased-lock** :   
+
+  
 * **For Thin-lock** (lightweight, not biased, contention is not too high) : share/runtime/synchronizer.cpp:347  
 (CAS mechanics the same as for Biased-lock)
 
@@ -55,4 +116,3 @@ Having only **Mutex** on hand, there are only two common ways to achieve multith
 
 ??? spin-wait
 
-??? fast-path / slow-path
