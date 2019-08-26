@@ -5,12 +5,26 @@ Every class object or corresponding instance of a class contains object header `
 *mark word* `markOop _mark` and  
 *class word (describes class object)*.
 
-Last two bits in *mark word* denotes current type of Lock mechanism, that depends on `contention` of threads over this object (being a monitor).
+Most of the time (during Biased, Thin locks and before inflating to heavyweight Fat lock) JVM utilize `CAS` CPU instruction for internal implementation of optimized Locking. 
 
-| Unlocked, but biasable     | 0             | Cool  |
-| -------------------------- |:-------------:| -----:|
+### Unlocked  &nbsp;=>&nbsp;  Biased lock
 
-Most of the time (during Biased and Thin lock states) JVM utilize `CAS` CPU instruction for internal implementation of optimized Locking.  
+Below are layouts of *mark word* during unlocked and biased lock states:
+
+
+| Unlocked, but biasable :    | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| epoch | age   |1   |01  |
+| --------------------------- |:-------------:| -----:| -----:|---:|---:|
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**initial lock**  &nbsp;&darr; &uarr;&nbsp; **rebias**
+
+| Biased, locked/unlocked :   | Thread id     | epoch | age   |1   |01  |
+| --------------------------- |:-------------:| -----:| -----:|---:|---:|
+
+* Last two bits `01` in *mark word* denotes current type of Lock mechanism, that depends on `contention` of threads over this object (being a monitor).
+* Third bit from the end `1` denotes that object is allowed to be biasable.
+* `age` - how many GC did the object survive.
+* `epoch` - the number of rebiase operations performed on object.
+* `Thread id` - current ID of owner (i.e. Thread).
 
 *Source code samples:*    
 
