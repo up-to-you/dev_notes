@@ -1,7 +1,7 @@
 ### Object header
 ### Biased lock  &nbsp;=>&nbsp;  Lightweight lock (Thin)  &nbsp;=>&nbsp;  Fat lock (Inflated).
 
-Every class object or corresponding instance of a class contains object header `share/oops/oop.hpp`, which consists of two `words`:  
+Every class object or corresponding instance of a class contains object header `share/oops/oop.hpp (oopDesc)`, which consists of two `words`:  
 *mark word* `markOop _mark` and  
 *class word (describes class object)*.
 
