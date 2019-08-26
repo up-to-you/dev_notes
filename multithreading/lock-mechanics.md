@@ -36,4 +36,6 @@ Having only **Mutex** on hand, there are only two common ways to achieve multith
 1. by using `futex` system-calls with `FUTEX_WAIT`, such that `contended` threads will be put to sleep and further thread awakening is costly.
 2. by simply spinning threads (Spin-Lock), such that `contended` threads will burn a lot of CPU cycles. Also, simple Spin-Lock may lead to Thread starvation.
 
-spin-wait ???
+??? spin-wait
+
+??? fast-path / slow-path
