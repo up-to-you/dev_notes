@@ -1,11 +1,14 @@
 ### Object header
-### Biased lock  &nbsp;=>&nbsp;  Lightweight lock (Thin)  &nbsp;=>&nbsp;  Fat lock (Inflated).
+### Unlocked  &nbsp;=>&nbsp;  Biased lock  &nbsp;=>&nbsp;  Lightweight lock (thin)  &nbsp;=>&nbsp;  Fat lock (inflated).
 
 Every class object or corresponding instance of a class contains object header `share/oops/oop.hpp (oopDesc)`, which consists of two `words`:  
 *mark word* `markOop _mark` and  
 *class word (describes class object)*.
 
 Last two bits in *mark word* denotes current type of Lock mechanism, that depends on `contention` of threads over this object (being a monitor).
+
+| Unlocked, but biasable     | 0             | Cool  |
+| -------------------------- |:-------------:| -----:|
 
 Most of the time (during Biased and Thin lock states) JVM utilize `CAS` CPU instruction for internal implementation of optimized Locking.  
 
