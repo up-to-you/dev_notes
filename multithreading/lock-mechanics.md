@@ -82,7 +82,7 @@ describes, that second thread, which comes to acquire already biased lock will c
 
 **Slow path** source code:  
 `share/runtime/biasedLocking.cpp:670`  
-CAS whole markWord `share/oops/oop.hpp:59 &rarr; share/oops/markOop.hpp:104` for newer rebiasedPrototype:
+CAS whole markWord `share/oops/oop.hpp:59 `&rarr;` share/oops/markOop.hpp:104` for newer rebiasedPrototype:
 ```C++
   markOop rebiased_prototype = 
      markOopDesc::encode((JavaThread*) THREAD, mark->age(), prototype_header->bias_epoch());
