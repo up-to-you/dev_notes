@@ -71,6 +71,9 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 
 `Fast path is a term used in computer science to describe a path with shorter instruction path length through a program compared to the 'normal'(i.e. slow-path) path.`
 
+*"... Because there are no updates to the object header at all during recursive locking while the lock is biased, the biased lock entry code is simply a test of the object header's value..."*  
+<= So, for such recursive biased-lock - JVM can do this the easy way - just check header's value in biased thread, moreover - by optimizing it using JIT (fast-path).
+
 *"... the biased lock entry code is simply a test of the object header's value. If this test succeeds, the lock has been acquired by the thread. If this test fails, a bit test is done to see whether the bias bit is still set ..."*   
 <=  
 describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail, such that bias will be revoked  
@@ -88,13 +91,10 @@ CAS whole markWord `share/oops/oop.hpp:59 => share/oops/markOop.hpp:104` for new
           return BIAS_REVOKED_AND_REBIASED;
   ```
 
------------------------------
-????? thin / lightweight lock
+### Biased lock  &nbsp;=>&nbsp;  Lightweight lock (thin)
+
 
 *Source code samples:*    
-* **For Biased-lock** :   
-
-  
 * **For Thin-lock** (lightweight, not biased, contention is not too high) : share/runtime/synchronizer.cpp:347  
 (CAS mechanics the same as for Biased-lock)
 
