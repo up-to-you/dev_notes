@@ -73,7 +73,7 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 
 *"... the biased lock entry code is simply a test of the object header's value. If this test succeeds, the lock has been acquired by the thread. If this test fails, a bit test is done to see whether the bias bit is still set ..."*   
 <=  
-describes, that second thread, which comes to acquire already biased lock will cause biased thread test to fail, such that bias will be revoked  
+describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail, such that bias will be revoked  
 =>  
 *"If another thread subsequently attempts to lock the same object, the bias is revoked"*
 
