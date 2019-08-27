@@ -93,6 +93,15 @@ CAS whole markWord `share/oops/oop.hpp:59 => share/oops/markOop.hpp:104` for new
 
 ### Biased lock  &nbsp;=>&nbsp;  Lightweight lock (thin)
 
+` share/runtime/synchronizer.cpp `  
+
+```C++
+// Interpreter/Compiler Slow Case
+// This routine is used to handle interpreter/compiler slow case
+// We don't need to use fast path here, because it must have been
+// failed in the interpreter/compiler code.
+void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
+```
 
 *Source code samples:*    
 * **For Thin-lock** (lightweight, not biased, contention is not too high) : share/runtime/synchronizer::slow_enter.cpp:347  
