@@ -76,7 +76,7 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 
 *"... the biased lock entry code is simply a test of the object header's value. If this test succeeds, the lock has been acquired by the thread. If this test fails, a bit test is done to see whether the bias bit is still set ..."*   
 <=  
-describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail, such that bias will be revoked  
+describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail, such that bias will be revoked and therefore switch to `Lightweight (thin)` lock state  
 =>  
 *"If another thread subsequently attempts to lock the same object, the bias is revoked"*
 
@@ -95,7 +95,7 @@ CAS whole markWord `share/oops/oop.hpp:59 => share/oops/markOop.hpp:104` for new
 
 
 *Source code samples:*    
-* **For Thin-lock** (lightweight, not biased, contention is not too high) : share/runtime/synchronizer.cpp:347  
+* **For Thin-lock** (lightweight, not biased, contention is not too high) : share/runtime/synchronizer::slow_enter.cpp:347  
 (CAS mechanics the same as for Biased-lock)
 
 * **For Flat-lock** (Inflated - OS based) : share/runtime/objectMonitor.cpp:270  
