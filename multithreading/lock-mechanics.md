@@ -28,7 +28,7 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 
 `src/hotspot/share/runtime/biasedLocking.hpp : `
 
-```code
+```C++
 // The basic observation is that in HotSpot's current fast locking
 // scheme, recursive locking (in the fast path) causes no update to
 // the object header. The recursion is described simply by stack
