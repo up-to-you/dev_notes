@@ -72,12 +72,12 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 `Fast path is a term used in computer science to describe a path with shorter instruction path length through a program compared to the 'normal'(i.e. slow-path) path.`
 
 *"... Because there are no updates to the object header at all during recursive locking while the lock is biased, the biased lock entry code is simply a test of the object header's value..."*  
-<= So, for such recursive biased-lock - JVM can do this the easy way - just check header's value in biased thread, moreover - optimizinging it using JIT (fast-path).
+&larr; So, for such recursive biased-lock - JVM can do this the easy way - just check header's value in biased thread, moreover - optimizinging it using JIT (fast-path).
 
 *"... the biased lock entry code is simply a test of the object header's value. If this test succeeds, the lock has been acquired by the thread. If this test fails, a bit test is done to see whether the bias bit is still set ..."*   
-<=  
+&larr;  
 describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail, such that bias will be revoked and therefore switch to `Lightweight (thin)` lock state  
-=>  
+&rarr;  
 *"If another thread subsequently attempts to lock the same object, the bias is revoked"*
 
 **Slow path** source code:  
