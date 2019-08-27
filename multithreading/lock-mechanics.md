@@ -1,5 +1,5 @@
 ### Object header
-### Unlocked  &nbsp;=>&nbsp;  Biased lock  &nbsp;=>&nbsp;  Lightweight lock (thin)  &nbsp;=>&nbsp;  Fat lock (inflated).
+### Unlocked  &nbsp;&rarr;&nbsp;  Biased lock  &nbsp;&rarr;&nbsp;  Lightweight lock (thin)  &nbsp;&rarr;&nbsp;  Fat lock (inflated).
 
 Every class object or corresponding instance of a class contains object header `share/oops/oop.hpp (oopDesc)`, which consists of two `words`:  
 *mark word* `markOop _mark` and  
@@ -7,7 +7,7 @@ Every class object or corresponding instance of a class contains object header `
 
 Most of the time (during Biased, Thin locks and before inflating to heavyweight Fat lock) JVM utilize `CAS` CPU instruction for internal implementation of optimized Locking. 
 
-### Unlocked  &nbsp;=>&nbsp;  Biased lock
+### Unlocked  &nbsp;&rarr;&nbsp;  Biased lock
 
 Below are layouts of *mark word* during unlocked and biased lock states:
 
@@ -82,7 +82,7 @@ describes, that second thread, which comes to acquire already biased lock will c
 
 **Slow path** source code:  
 `share/runtime/biasedLocking.cpp:670`  
-CAS whole markWord `share/oops/oop.hpp:59 => share/oops/markOop.hpp:104` for newer rebiasedPrototype:
+CAS whole markWord `share/oops/oop.hpp:59 &rarr; share/oops/markOop.hpp:104` for newer rebiasedPrototype:
 ```C++
   markOop rebiased_prototype = 
      markOopDesc::encode((JavaThread*) THREAD, mark->age(), prototype_header->bias_epoch());
@@ -91,7 +91,7 @@ CAS whole markWord `share/oops/oop.hpp:59 => share/oops/markOop.hpp:104` for new
           return BIAS_REVOKED_AND_REBIASED;
   ```
 
-### Biased lock  &nbsp;=>&nbsp;  Lightweight lock (thin)
+### Biased lock  &nbsp;&rarr;&nbsp;  Lightweight lock (thin)
 
 ` share/runtime/synchronizer.cpp `  
 
