@@ -81,7 +81,7 @@ describes, that second thread, which comes to acquire already biased lock will c
 
 **Slow path** source code:  
 `share/runtime/biasedLocking.cpp:670`  
-CAS whole markWord `share/oops/oop.hpp:59 `&rarr;` share/oops/markOop.hpp:104` for newer rebiasedPrototype:
+CAS whole markWord (`share/oops/oop.hpp:59` &rarr; `share/oops/markOop.hpp:104`) for newer rebiasedPrototype:
 ```C++
   markOop rebiased_prototype = 
      markOopDesc::encode((JavaThread*) THREAD, mark->age(), prototype_header->bias_epoch());
@@ -92,7 +92,7 @@ CAS whole markWord `share/oops/oop.hpp:59 `&rarr;` share/oops/markOop.hpp:104` f
 
 ### Biased lock  &nbsp;&rarr;&nbsp;  Lightweight lock (thin)
 
-` share/runtime/synchronizer.cpp `  
+` share/runtime/synchronizer.cpp:339 `  
 
 ```C++
 // Interpreter/Compiler Slow Case
@@ -101,6 +101,28 @@ CAS whole markWord `share/oops/oop.hpp:59 `&rarr;` share/oops/markOop.hpp:104` f
 // failed in the interpreter/compiler code.
 void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 ```
+
+So, the Biased lock keeps alive while fast-path header's value test is passing successfully and ThreadId in is equals to current Thread.
+
+The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instructions to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test fail at Biased Thread and Bias revocation. 
+
+Details described in ` share/runtime/biasedLocking.cpp:revoke_and_rebias func `:
+```C++
+share/runtime/biasedLocking.cpp:647
+
+if (!prototype_header->has_bias_pattern()) {
+      // This object has a stale bias from before the bulk revocation
+      // for this data type occurred. It's pointless to update the
+      // heuristics at this point so simply update the header with a
+      // CAS. If we fail this race, the object's bias has been revoked
+      // by another thread so we simply return and let the caller deal
+      // with it.
+      markOop biased_value       = mark;
+      markOop res_mark = obj->cas_set_mark(prototype_header, mark);
+      assert(!obj->mark()->has_bias_pattern(), "even if we raced, should still be revoked");
+      return BIAS_REVOKED;
+```
+
 
 *Source code samples:*    
 * **For Thin-lock** (lightweight, not biased, contention is not too high) : share/runtime/synchronizer::slow_enter.cpp:347  
