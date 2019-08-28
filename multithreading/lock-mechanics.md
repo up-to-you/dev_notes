@@ -102,7 +102,7 @@ CAS whole markWord (`share/oops/oop.hpp:59` &rarr; `share/oops/markOop.hpp:104`)
 void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 ```
 
-So, the Biased lock keeps alive while fast-path header's value test is passing successfully and ThreadId in is equals to current Thread.
+So, the Biased lock keeps alive while fast-path header's value test is passing successfully and ThreadId is equal to current Thread.
 
 The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instructions to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test fail at Biased Thread and Bias revocation. 
 
