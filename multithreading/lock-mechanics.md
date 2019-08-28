@@ -104,7 +104,7 @@ void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 
 So, the Biased lock keeps alive while fast-path header's value test is passing successfully and ThreadId is equal to current Thread.
 
-The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instructions to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test fail at Biased Thread and Bias revocation. 
+The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instructions to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread, which entails Bias Revocation. 
 
 Details described in ` share/runtime/biasedLocking.cpp:revoke_and_rebias func `:
 ```C++
