@@ -80,7 +80,7 @@ describes, that second thread, which comes to acquire already biased lock will c
 *"If another thread subsequently attempts to lock the same object, the bias is revoked"*
 
 Fast path (i.e. JITed) interpreted piece resides in `share/runtime/synchronizer.cpp:257`:  
-if Biased lock was `BIAS_REVOKED_AND_REBIASED` - return and avoid slow_enter (i.e. slow path) invokation:
+if Biased lock was `BIAS_REVOKED_AND_REBIASED` - return and avoid slow_enter (i.e. slow path) invocation:
 ```C++
 // -----------------------------------------------------------------------------
 //  Fast Monitor Enter/Exit
