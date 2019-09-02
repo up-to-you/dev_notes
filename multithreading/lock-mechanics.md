@@ -79,7 +79,7 @@ describes, that second thread, which comes to acquire already biased lock will c
 &rarr;  
 *"If another thread subsequently attempts to lock the same object, the bias is revoked"*
 
-Fast path (i.e. JITed) interpreted piece resides in `share/runtime/synchronizer.cpp:257`:  
+Fast path (i.e. JITed) interpreted piece resides in `share/runtime/synchronizer.cpp:270`:  
 if Biased lock was `BIAS_REVOKED_AND_REBIASED` - return and avoid slow_enter (i.e. slow path) invocation:
 ```C++
 // -----------------------------------------------------------------------------
@@ -138,10 +138,11 @@ So, the Biased lock keeps alive while fast-path header's value test is passing s
 
 The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instruction to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread, which entails Bias Revocation. 
 
-Details described in ` share/runtime/biasedLocking.cpp:revoke_and_rebias func `:
-```C++
-share/runtime/biasedLocking.cpp:647
+So, if any of conditions in `share/runtime/biasedLocking.cpp:revoke_and_rebias` func results in returning `BIAS_REVOKED`,  
+then JVM start to use slow_enter `share/runtime/synchronizer.cpp:279` (i.e. Lightweight / Thin lock).
 
+One of such example `share/runtime/biasedLocking.cpp:647`:
+```C++
 if (!prototype_header->has_bias_pattern()) {
       // This object has a stale bias from before the bulk revocation
       // for this data type occurred. It's pointless to update the
