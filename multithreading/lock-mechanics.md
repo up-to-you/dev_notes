@@ -71,13 +71,12 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 
 `Fast path is a term used in computer science to describe a path with shorter instruction path length through a program compared to the 'normal'(i.e. slow-path) path.`
 
-*"... Because there are no updates to the object header at all during recursive locking while the lock is biased, the biased lock entry code is simply a test of the object header's value..."* &larr; So, for such recursive biased-lock - JVM can do this the easy way - just check header's value in biased thread, moreover - optimizinging it using JIT (fast-path).
+*"... Because there are no updates to the object header at all during recursive locking while the lock is biased, the biased lock entry code is simply a test of the object header's value..."*   
+&larr; So, for such recursive biased-lock - JVM can do this the easy way - just check header's value in biased thread, moreover - optimizinging it using JIT (fast-path).
 
 *"... the biased lock entry code is simply a test of the object header's value. If this test succeeds, the lock has been acquired by the thread. If this test fails, a bit test is done to see whether the bias bit is still set ..."*   
 &larr;  
-describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail, such that bias will be revoked and therefore switch to `Lightweight (thin)` lock state  
-&rarr;  
-*"If another thread subsequently attempts to lock the same object, the bias is revoked"*
+describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail. If it fail - there will be a try to rebias the lock (`BIAS_REVOKED_AND_REBIASED`). If rebiasing fails too, then bias will be revoked and therefore switch to `Lightweight (thin)` lock state.
 
 Fast path (i.e. JITed) interpreted piece resides in `share/runtime/synchronizer.cpp:270`:  
 if Biased lock was `BIAS_REVOKED_AND_REBIASED` - return and avoid slow_enter (i.e. slow path) invocation:
@@ -124,19 +123,9 @@ where current Thread is trying to CAS whole markWord in Monitor's object header 
 
 ### Biased lock  &nbsp;&rarr;&nbsp;  Lightweight lock (thin)
 
-` share/runtime/synchronizer.cpp:339 `  
-
-```C++
-// Interpreter/Compiler Slow Case
-// This routine is used to handle interpreter/compiler slow case
-// We don't need to use fast path here, because it must have been
-// failed in the interpreter/compiler code.
-void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
-```
-
 So, the Biased lock keeps alive while fast-path header's value test is passing successfully and ThreadId is equal to current Thread.
 
-The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instruction to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread, which entails Bias Revocation. 
+The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instruction to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread. If attempt to rebiase the lock fails (`BIAS_REVOKED_AND_REBIASED`) - Bias Revocation will be performed.  
 
 So, if any of conditions in `share/runtime/biasedLocking.cpp:revoke_and_rebias` func results in returning `BIAS_REVOKED`, 
 then JVM start to use slow_enter `share/runtime/synchronizer.cpp:279` (i.e. Lightweight / Thin lock).
@@ -155,6 +144,19 @@ if (!prototype_header->has_bias_pattern()) {
       assert(!obj->mark()->has_bias_pattern(), "even if we raced, should still be revoked");
       return BIAS_REVOKED;
 ```
+
+
+` share/runtime/synchronizer.cpp:339 `  
+
+```C++
+// Interpreter/Compiler Slow Case
+// This routine is used to handle interpreter/compiler slow case
+// We don't need to use fast path here, because it must have been
+// failed in the interpreter/compiler code.
+void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
+```
+
+
 
 
 *Source code samples:*    
