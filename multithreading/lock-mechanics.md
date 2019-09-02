@@ -79,16 +79,48 @@ describes, that second thread, which comes to acquire already biased lock will c
 &rarr;  
 *"If another thread subsequently attempts to lock the same object, the bias is revoked"*
 
-**Slow path** source code:  
-`share/runtime/biasedLocking.cpp:670`  
-CAS whole markWord (`share/oops/oop.hpp:59` &rarr; `share/oops/markOop.hpp:104`) for newer rebiasedPrototype:
+Fast path (i.e. JITed) interpreted piece resides in `share/runtime/synchronizer.cpp:257`:  
+if Biased lock was `BIAS_REVOKED_AND_REBIASED` - return and avoid slow_enter (i.e. slow path) invokation:
 ```C++
-  markOop rebiased_prototype = 
-     markOopDesc::encode((JavaThread*) THREAD, mark->age(), prototype_header->bias_epoch());
-     markOop res_mark = obj->cas_set_mark(rebiased_prototype, mark);
+// -----------------------------------------------------------------------------
+//  Fast Monitor Enter/Exit
+// This the fast monitor enter. The interpreter and compiler use
+// some assembly copies of this code. Make sure update those code
+// if the following function is changed. The implementation is
+// extremely sensitive to race condition. Be careful.
+
+void ObjectSynchronizer::fast_enter(Handle obj, BasicLock* lock,
+                                    bool attempt_rebias, TRAPS) {
+  if (UseBiasedLocking) {
+    if (!SafepointSynchronize::is_at_safepoint()) {
+      BiasedLocking::Condition cond = BiasedLocking::revoke_and_rebias(obj, attempt_rebias, THREAD);
+      if (cond == BiasedLocking::BIAS_REVOKED_AND_REBIASED) {
+        return;
+      }
+    } else {
+      assert(!attempt_rebias, "can not rebias toward VM thread");
+      BiasedLocking::revoke_at_safepoint(obj);
+    }
+    assert(!obj->mark()->has_bias_pattern(), "biases should be revoked by now");
+  }
+
+  slow_enter(obj, lock, THREAD);
+}
+```
+
+The attempt to rebias occurs in `share/runtime/biasedLocking.cpp:670`:
+```C++
+if (attempt_rebias) {
+    assert(THREAD->is_Java_thread(), "");
+    markOop biased_value       = mark;
+    markOop rebiased_prototype = 
+        markOopDesc::encode((JavaThread*) THREAD, mark->age(), prototype_header->bias_epoch());
+        markOop res_mark = obj->cas_set_mark(rebiased_prototype, mark);
         if (res_mark == biased_value) {
           return BIAS_REVOKED_AND_REBIASED;
+        }
   ```
+where current Thread is trying to CAS whole markWord in Monitor's object header (described in `share/oops/oop.hpp:59` and `share/oops/markOop.hpp:104`) for newer `markOop rebiased_prototype`.
 
 ### Biased lock  &nbsp;&rarr;&nbsp;  Lightweight lock (thin)
 
@@ -104,7 +136,7 @@ void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 
 So, the Biased lock keeps alive while fast-path header's value test is passing successfully and ThreadId is equal to current Thread.
 
-The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instructions to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread, which entails Bias Revocation. 
+The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instruction to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread, which entails Bias Revocation. 
 
 Details described in ` share/runtime/biasedLocking.cpp:revoke_and_rebias func `:
 ```C++
