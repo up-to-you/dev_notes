@@ -108,7 +108,7 @@ void ObjectSynchronizer::fast_enter(Handle obj, BasicLock* lock,
 }
 ```
 
-The attempt to rebias occurs in `share/runtime/biasedLocking.cpp:670`:
+The attempt to rebias (`revoke_and_rebias`) occurs in `share/runtime/biasedLocking.cpp:670`:
 ```C++
 if (attempt_rebias) {
     assert(THREAD->is_Java_thread(), "");
