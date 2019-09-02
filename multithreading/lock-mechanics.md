@@ -138,7 +138,7 @@ So, the Biased lock keeps alive while fast-path header's value test is passing s
 
 The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instruction to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread, which entails Bias Revocation. 
 
-So, if any of conditions in `share/runtime/biasedLocking.cpp:revoke_and_rebias` func results in returning `BIAS_REVOKED`,  
+So, if any of conditions in `share/runtime/biasedLocking.cpp:revoke_and_rebias` func results in returning `BIAS_REVOKED`, 
 then JVM start to use slow_enter `share/runtime/synchronizer.cpp:279` (i.e. Lightweight / Thin lock).
 
 One of such example `share/runtime/biasedLocking.cpp:647`:
