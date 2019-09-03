@@ -161,7 +161,15 @@ There are only few positive conditions for further performing of Thin locking in
 2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking).
 
 
+| Biased, locked/unlocked :   | Thread id     | epoch | age   |1   |01  |
+| --------------------------- |:-------------:| -----:| -----:|---:|---:|
+  
+  
 
+| Thin/Lightweight locked object : | Pointer to original header (markword)  |00 |
+| --------------------------- |:-------------:|--------:|
+
+displaced header - pointer to a Stack slot in Stack frame
 
 
 *Source code samples:*    
