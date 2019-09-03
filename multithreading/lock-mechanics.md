@@ -125,7 +125,7 @@ where current Thread is trying to CAS whole markWord in Monitor's object header 
 
 ### Biased lock  &nbsp;&rarr;&nbsp;  Lightweight lock (thin)
 
-So, the Biased lock keeps alive while fast-path header's value test is passing successfully and ThreadId is equal to current Thread.
+So, the Biased lock keeps alive while fast-path header's value test is passing successfully.
 
 The crucial moment between Biased and Lightweight lock (as described above) occurs, when another Thread performs CAS instruction to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread. If JVM detects (through internal heuristics), that current synchronization between Threads is `Uncontended` - there will be attempt to rebiase the lock (`BIAS_REVOKED_AND_REBIASED`), otherwise - Bias Revocation will be performed.
 
