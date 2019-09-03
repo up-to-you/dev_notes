@@ -148,8 +148,7 @@ if (!prototype_header->has_bias_pattern()) {
 ```
 
 
-` share/runtime/synchronizer.cpp:339 `  
-
+Any further monitor acquiring during Lightweight lock state is performing using CAS instruction, since `slow_enter` denotes slow-path without Biased-like fast-path JIT optimizations.
 ```C++
 // Interpreter/Compiler Slow Case
 // This routine is used to handle interpreter/compiler slow case
@@ -157,6 +156,10 @@ if (!prototype_header->has_bias_pattern()) {
 // failed in the interpreter/compiler code.
 void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 ```
+There are only few positive conditions for further performing of Thin locking in `slow_enter` func (`share/runtime/synchronizer.cpp:339`):  
+1. If current object's monitor is free, therefore CAS results in success. 
+2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking).
+
 
 
 
