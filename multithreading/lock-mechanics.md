@@ -7,6 +7,8 @@ Every class object or corresponding instance of a class contains object header `
 
 Most of the time (during Biased, Thin locks and before inflating to heavyweight Fat lock) JVM utilize `CAS` CPU instruction for internal implementation of optimized Locking. 
 
+`Contention`- the name is the same as it's meaning, it's a contention between Threads for some resource, in current scope - contention for Object's Monitor lock. 
+
 ### Unlocked  &nbsp;&rarr;&nbsp;  Biased lock
 
 Below are layouts of *mark word* during unlocked and biased lock states:
@@ -76,7 +78,7 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 
 *"... the biased lock entry code is simply a test of the object header's value. If this test succeeds, the lock has been acquired by the thread. If this test fails, a bit test is done to see whether the bias bit is still set ..."*   
 &larr;  
-describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail. If it fail - there will be a try to rebias the lock (`BIAS_REVOKED_AND_REBIASED`). If rebiasing fails too, then bias will be revoked and therefore switch to `Lightweight (thin)` lock state.
+describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail. If it fail and JVM detects (through internal heuristics), that current synchronization between Threads is `Uncontended` - there will be a try to rebias the lock (`BIAS_REVOKED_AND_REBIASED`). If rebiasing fails or there is a `Contention` between Threads - bias will be revoked and therefore switch to `Lightweight (thin)` lock state.
 
 Fast path (i.e. JITed) interpreted piece resides in `share/runtime/synchronizer.cpp:270`:  
 if Biased lock was `BIAS_REVOKED_AND_REBIASED` - return and avoid slow_enter (i.e. slow path) invocation:
@@ -125,7 +127,7 @@ where current Thread is trying to CAS whole markWord in Monitor's object header 
 
 So, the Biased lock keeps alive while fast-path header's value test is passing successfully and ThreadId is equal to current Thread.
 
-The crucial moment between Biased and Lightweight lock occurs, when another Thread performs CAS instruction to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread. If attempt to rebiase the lock fails (`BIAS_REVOKED_AND_REBIASED`) - Bias Revocation will be performed.  
+The crucial moment between Biased and Lightweight lock (as described above) occurs, when another Thread performs CAS instruction to acquire this already Biased Lock and if it succeeded - object's header value is changed, therefore leading to test failure in Biased Thread. If JVM detects (through internal heuristics), that current synchronization between Threads is `Uncontended` - there will be attempt to rebiase the lock (`BIAS_REVOKED_AND_REBIASED`), otherwise - Bias Revocation will be performed.
 
 So, if any of conditions in `share/runtime/biasedLocking.cpp:revoke_and_rebias` func results in returning `BIAS_REVOKED`, 
 then JVM start to use slow_enter `share/runtime/synchronizer.cpp:279` (i.e. Lightweight / Thin lock).
