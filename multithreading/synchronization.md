@@ -5,7 +5,7 @@ Mutex (or Lock) is an OS-specific structure (https://github.com/torvalds/linux/b
 
 This flag helps to achieve `mutual exclusion`. `Mutual exclusion` describes the property in concurrent programming, such that, given the two threads T1, T2: T2 will never access critical part of data, while T1 is working on it. 
 
-Safe flag value modification is achieved by CPU instructions, such as `LOCK`.  
+Flag's value safe modification is achieved by CPU instructions, such as `LOCK`.  
 `LOCK` is a prefix feature (e.g. `LOCK CMPXCHG`, `CMPXCHG` - compare and exchange) which protects a single instruction while holding other threads for the duration of that single instruction.
 
 
