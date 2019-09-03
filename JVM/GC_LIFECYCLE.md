@@ -23,7 +23,7 @@ Once `Eden` space is filled, minor GC marks reachable objects for further transf
 
 <img src="assets/gc_1.png">
 
-`Eden` space is filled again and now minor GC scans `Eden` and `S0` as contigious area, marking reachable objects from both spaces for further transfer to `S1`.
+`Eden` space is filled again and now minor GC scans `Eden` and `S0` as continuous area, marking reachable objects from both spaces for further transfer to `S1`.
 After transfer completed, GC can easely throw out entire area of unreachable objects.
 
 <img src="assets/gc_2.png">
