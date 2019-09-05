@@ -78,7 +78,7 @@ First of all, the Thread is trying to acquire the lock by using CAS instruction 
 
 *"... the biased lock entry code is simply a test of the object header's value. If this test succeeds, the lock has been acquired by the thread. If this test fails, a bit test is done to see whether the bias bit is still set ..."*   
 &larr;  
-describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail. If it fail and JVM detects (through internal heuristics), that current synchronization between Threads is `Uncontended` - there will be a try to rebias the lock (`BIAS_REVOKED_AND_REBIASED`). If rebiasing fails or there is a `Contention` between Threads - bias will be revoked and therefore switch to `Lightweight (thin)` lock state.
+describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail. If it fail and JVM detects (through internal heuristics), that current synchronization between Threads is `Uncontended` - there will be a try to rebias the lock (`BIAS_REVOKED_AND_REBIASED`) towards newcomer Thread. If rebiasing fails or there is a `Contention` between Threads - bias will be revoked and therefore switch to `Lightweight (thin)` lock state.
 
 Fast path (i.e. JITed) interpreted piece resides in `share/runtime/synchronizer.cpp:270`:  
 if Biased lock was `BIAS_REVOKED_AND_REBIASED` - return and avoid slow_enter (i.e. slow path) invocation:
