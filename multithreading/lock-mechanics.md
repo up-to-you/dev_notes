@@ -80,6 +80,30 @@ First of all, the Thread is trying to acquire the lock by using CAS instruction 
 &larr;  
 describes, that second thread, which comes to acquire already biased lock will cause biased thread test (monitor header value check) to fail. If it fail and JVM detects (through internal heuristics), that current synchronization between Threads is `Uncontended` - there will be a try to rebias the lock (`BIAS_REVOKED_AND_REBIASED`) towards newcomer Thread. If rebiasing fails or there is a `Contention` between Threads - bias will be revoked and therefore switch to `Lightweight (thin)` lock state.
 
+Lock rebiasing towards newcomer Thread is performed at `share/runtime/biasedLocking.cpp:475`:
+```C++
+static BiasedLocking::Condition bulk_revoke_or_rebias_at_safepoint(oop o,
+                                                                   bool bulk_rebias,
+                                                                   bool attempt_rebias_of_object,
+                                                                   JavaThread* requesting_thread) {
+...
+... ...
+... ... ...
+  if (attempt_rebias_of_object &&
+      o->mark()->has_bias_pattern() &&
+      klass->prototype_header()->has_bias_pattern()) {
+    markOop new_mark = markOopDesc::encode(requesting_thread, o->mark()->age(),
+                                           klass->prototype_header()->bias_epoch());
+    o->set_mark(new_mark);
+    status_code = BiasedLocking::BIAS_REVOKED_AND_REBIASED;
+    log_info(biasedlocking)("  Rebiased object toward thread " INTPTR_FORMAT, 
+                                                              (intptr_t) requesting_thread);
+  }
+... ... ...
+... ...
+...
+```
+
 Fast path (i.e. JITed) interpreted piece resides in `share/runtime/synchronizer.cpp:270`:  
 if Biased lock was `BIAS_REVOKED_AND_REBIASED` - return and avoid slow_enter (i.e. slow path) invocation:
 ```C++
