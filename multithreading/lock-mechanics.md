@@ -28,7 +28,16 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 * `epoch` - the number of rebiase operations performed on object.
 * `Thread id` - current ID of owner (i.e. Thread).
 
-First of all, the Thread is trying to acquire the lock by using CAS instruction on Object's header `markWord`. CAS instruction is trying to set current Thread ID into the `markWord`, if it succeeds - the Object (that represents current Monitor) is biased towards that Thread. Biased fast-path locking is JITted, such that no modifications of Object's header are performed. NULL instead of Thread ID in `markWord` indicates `anonymously biased` object, which means, that nobody acquired this Monitor. The first thread which locks an anonymously biased object - Biases the lock toward that thread, respectively. Algorithm briefly described in `src/hotspot/share/runtime/biasedLocking.hpp : `.
+First of all, the Thread is trying to acquire the lock by using CAS instruction on Object's header `markWord`. CAS instruction is trying to set current Thread ID into the `markWord`, if it succeeds - the Object (that represents current Monitor) is biased towards that Thread. Biased fast-path locking is JITted, such that no modifications of Object's header are performed. NULL instead of Thread ID in `markWord` indicates `anonymously biased` object (biased towards NOBODY yet). 
+`Anonymously biased` - means, that nobody acquired this Monitor yet, but bias-bit `01` is already set, `share/oops/markOop.hpp:190`:
+```C+++
+  // Indicates that the mark has the bias bit set but that it has not
+  // yet been biased toward a particular thread
+  bool is_biased_anonymously() const {
+    return (has_bias_pattern() && (biased_locker() == NULL));
+  }
+```
+The first thread which locks an anonymously biased object - Biases the lock toward that thread, respectively. Algorithm briefly described in `src/hotspot/share/runtime/biasedLocking.hpp : `.
 
 ```C++
 // The basic observation is that in HotSpot's current fast locking
