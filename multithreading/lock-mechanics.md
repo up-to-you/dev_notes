@@ -30,7 +30,7 @@ Below are layouts of *mark word* during unlocked and biased lock states:
 
 First of all, the Thread is trying to acquire the lock by using CAS instruction on Object's header `markWord`. CAS instruction is trying to set current Thread ID into the `markWord`, if it succeeds - the Object (that represents current Monitor) is biased towards that Thread. Biased fast-path locking is JITted, such that no modifications of Object's header are performed. NULL instead of Thread ID in `markWord` indicates `anonymously biased` object (biased towards NOBODY yet). 
 `Anonymously biased` - means, that nobody acquired this Monitor yet, but bias-bit `01` is already set, `share/oops/markOop.hpp:190`:
-```C+++
+```C++
   // Indicates that the mark has the bias bit set but that it has not
   // yet been biased toward a particular thread
   bool is_biased_anonymously() const {
@@ -191,8 +191,8 @@ void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 ```
 There are only few positive conditions for further performing of Thin locking in `slow_enter` func (`share/runtime/synchronizer.cpp:339`):  
 1. If current object's monitor is free, therefore CAS results in success. 
-2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking).  
-Otherwise -> inflated
+2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking).
+3. Otherwise, Monitor becomes inflated and switches to Fat lock which in turn means - using the OS-based 
 
 | Biased, locked/unlocked :   | Thread id     | epoch | age   |1   |01  |
 | --------------------------- |:-------------:| -----:| -----:|---:|---:|
