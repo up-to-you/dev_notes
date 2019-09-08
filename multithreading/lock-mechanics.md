@@ -192,7 +192,7 @@ void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 There are only few positive conditions for further performing of Thin locking in `slow_enter` func (`share/runtime/synchronizer.cpp:339`):  
 1. If current object's monitor is free, therefore CAS results in success. 
 2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking).
-3. Otherwise, Monitor becomes inflated and switches to Fat lock which in turn means - using the OS-based 
+3. Otherwise, Monitor becomes inflated and switches to Fat lock which in turn means - using the OS-based Threads synchronization.
 
 | Biased, locked/unlocked :   | Thread id     | epoch | age   |1   |01  |
 | --------------------------- |:-------------:| -----:| -----:|---:|---:|
