@@ -188,11 +188,6 @@ Any further monitor acquiring during Lightweight lock state is performing using 
 // failed in the interpreter/compiler code.
 void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 ```
-There are only few positive conditions for further performing of Thin locking in `slow_enter` func (`share/runtime/synchronizer.cpp:339`):  
-1. If current object's monitor is free, therefore CAS results in success. 
-2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking).
-3. Otherwise, Monitor becomes inflated and switches to Fat lock which in turn means - using the OS-based (via system calls) Threads synchronization.
-
 `markWord` layouts during transition Biased lock &rarr; Lightweight lock  
 
 | Biased, locked :            | Thread id     | epoch | age   |1   |01  |
@@ -202,6 +197,25 @@ There are only few positive conditions for further performing of Thin locking in
 
 | Thin/Lightweight locked object : | Pointer to original header (markword)  |00 |
 | --------------------------- |:-------------:|--------:|
+
+After Biased lock was Revoked - JVM invokes `slow_enter` functon `share/runtime/synchronizer.cpp:279`. JVM copies Monitor's object header (`markWord`) to it's own Stack Slot (within Stack Frame) and then tries to set a pointer to the original Monitor's object `markWord` via CAS instruction.   
+The copied `markWord`, that resides in Thread's Stack Slot is called `displaced header`.   
+`Displaced header` and its pointer in the original Monitor's header are necessary for two reasons:   
+1) Lock can be acquired multiple times by the same Thread (i.e. recursive lock), but only   
+2) 
+
+
+
+First of all, during Lightweight lock, 
+
+during Lightweight lock the Thread attempts to set a pointer to the original displaced header of a   in the object's header 
+
+There are only few positive conditions for further performing of Thin locking in `slow_enter` func (`share/runtime/synchronizer.cpp:339`):  
+1. If current object's monitor is free, therefore CAS results in success. 
+2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking).
+3. Otherwise, Monitor becomes inflated and switches to Fat lock which in turn means - using the OS-based (via system calls) Threads synchronization.
+
+
 
 displaced header - pointer to a Stack slot in Stack frame
 
