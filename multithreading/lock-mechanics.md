@@ -200,24 +200,32 @@ void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 
 After Biased lock was Revoked - JVM invokes `slow_enter` functon `share/runtime/synchronizer.cpp:279`. JVM copies Monitor's object header (`markWord`) to it's own Stack Slot (within Stack Frame) and then tries to set a pointer in the original Monitor's object `markWord` via CAS instruction, that points to copied `markWord`.   
 The copied `markWord`, that resides in Thread's Stack Slot is called `displaced header`.   
+```C++
+    Unlocked:
+    [ original_header | 01 ]    |   Stack frame   |
+                                |                 |
+    Locked:                     |                 |
+    [ stack_pointer | 00 ]      |                 |
+         |                      |-----------------|
+          --------------------->| original_header |
+                                |(displaced copy) |
+                                |-----------------|
+                                |                 |
+                                |                 |
+                                 -----------------
+```
 `Displaced header` and its pointer in the original Monitor's header are necessary for two reasons:   
-1) Lock can be acquired multiple times by the same Thread (i.e. recursive lock), but only the last 
-2) 
+1) Eventually, when Unlocking of Monitor occurs, current header must be replaced with the `original header`. It can be done easily, since `original header` is reachable via `stack_pointer`. 
+2) When thread acquires the lock, besides copying original `markWord` and setting the pointer to Monitor's header, it also modifies last 2 bits of Monitor's header to `00`, which mean `locked` Monitor. However, Lock can be acquired multiple times by the same Thread (i.e. recursive lock), but only the **last** Lock release must trigger the return of the `original header`. Such optimization as storing `original header` via pointer allows not to spam via relatively heavy Lock/Unlock operations during recursive locking.
+
+During Recursive locking, `stack pointer` is replaced with `NULL` (which denotes recursive lock), being that current Thread (Lock owner) already contains copy of `original header` in its Stack Slot.
+
+There are only few positive conditions for further performing of Thin locking in `slow_enter` function (`share/runtime/synchronizer.cpp:339`):  
+1. If current object's monitor is free, therefore CAS results in success (`original heaer` is replaced with `stack_pointer`)
+2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking, `stack_pointer` is replaced with `NULL`).
+3. Otherwise, Monitor becomes inflated and switches to Fat locking, which in turn means - using the OS-based Threads synchronization via system calls.
 
 
-
-First of all, during Lightweight lock, 
-
-during Lightweight lock the Thread attempts to set a pointer to the original displaced header of a   in the object's header 
-
-There are only few positive conditions for further performing of Thin locking in `slow_enter` func (`share/runtime/synchronizer.cpp:339`):  
-1. If current object's monitor is free, therefore CAS results in success. 
-2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking).
-3. Otherwise, Monitor becomes inflated and switches to Fat lock which in turn means - using the OS-based (via system calls) Threads synchronization.
-
-
-
-displaced header - pointer to a Stack slot in Stack frame
 
 
 *Source code samples:*    
