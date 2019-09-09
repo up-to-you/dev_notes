@@ -201,7 +201,7 @@ void ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
 After Biased lock was Revoked - JVM invokes `slow_enter` functon `share/runtime/synchronizer.cpp:279`. JVM copies Monitor's object header (`markWord`) to it's own Stack Slot (within Stack Frame) and then tries to set a pointer in the original Monitor's object `markWord` via CAS instruction, that points to copied `markWord`.   
 The copied `markWord`, that resides in Thread's Stack Slot is called `displaced header`.   
 `Displaced header` and its pointer in the original Monitor's header are necessary for two reasons:   
-1) Lock can be acquired multiple times by the same Thread (i.e. recursive lock), but only   
+1) Lock can be acquired multiple times by the same Thread (i.e. recursive lock), but only the last 
 2) 
 
 
