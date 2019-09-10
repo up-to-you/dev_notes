@@ -221,7 +221,7 @@ The copied `markWord`, that resides in Thread's Stack Slot is called `displaced 
 During Recursive locking, `stack pointer` is replaced with `NULL` (which denotes recursive lock), being that current Thread (Lock owner) already contains copy of `original header` in its Stack Slot.
 
 There are only few positive conditions for further performing of Thin locking in `slow_enter` function (`share/runtime/synchronizer.cpp:339`):  
-1. If current object's monitor is free, therefore CAS results in success (`original heaer` is replaced with `stack_pointer`)
+1. If current object's monitor is free, therefore CAS results in success (`original header` is replaced with `stack_pointer`)
 2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking, `stack_pointer` is replaced with `NULL`).
 3. Otherwise, Monitor becomes inflated and switches to Fat locking, which in turn means - using the OS-based Threads synchronization via system calls.
 
