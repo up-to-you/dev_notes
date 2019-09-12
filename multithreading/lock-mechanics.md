@@ -10,7 +10,7 @@ which consists of two `words`:
 *class word/pointer (describes the class)*   
 `// An instanceOop is an instance of a Java Class`   
 Class instance (i.e. plain java object) described in `share/oops/instanceOop.hpp (instanceOopDesc)`.   
-Since every ***Oop C++ class inherits oopDesc class - every class instace contains `markWord` and class pointer too.   
+Since every ***Oop C++ class inherits oopDesc class - every class instance contains `markWord` and class pointer too.   
 
 Most of the time (during Biased, Thin locks and before inflating to heavyweight Fat lock) JVM utilize `CAS` CPU instruction for internal implementation of optimized Locking. 
 
