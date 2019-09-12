@@ -1,9 +1,16 @@
 ### Object header
 ### Unlocked  &nbsp;&rarr;&nbsp;  Biased lock  &nbsp;&rarr;&nbsp;  Lightweight lock (thin)  &nbsp;&rarr;&nbsp;  Fat lock (inflated).
 
-Every class object or corresponding instance of a class contains object header `share/oops/oop.hpp (oopDesc)`, which consists of two `words`:  
+`// The markOop describes the header of an object.`   
+Every class object or corresponding class instance contains object's header `share/oops/markOop.hpp (class markOopDesc)`.   
+`// oopDesc is the top baseclass for objects classes.`   
+The Java class object itself is described in `share/oops/oop.hpp (class oopDesc)`
+which consists of two `words`:  
 *mark word* `markOop _mark` and  
-*class word (describes class object)*.
+*class word/pointer (describes the class)*   
+`// An instanceOop is an instance of a Java Class`   
+Class instance (i.e. plain java object) described in `share/oops/instanceOop.hpp (instanceOopDesc)`.   
+Since every ***Oop C++ class inherits oopDesc class - every class instace contains `markWord` and class pointer too.   
 
 Most of the time (during Biased, Thin locks and before inflating to heavyweight Fat lock) JVM utilize `CAS` CPU instruction for internal implementation of optimized Locking. 
 
