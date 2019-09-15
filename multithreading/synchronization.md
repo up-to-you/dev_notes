@@ -19,7 +19,7 @@ Mutex as a term, doesn't provide any functionality like threads cooperation or m
 #### Monitor
 
 Monitor provides both: locking and cooperation mechanics.  
-Cooperation mechanics are implementation specific, e.g. using `futex` (Linux - specific) with `FUTEX_WAIT` (Thread wait) on Threads, that are currently trying to acquire already locked mutex.
+Cooperation mechanics are implementation specific, e.g. using `futex` (Linux - specific) with `FUTEX_WAIT` or Java-based Monitor's `wait()` and `notify()` signaling.
 
 
 #### Semaphore
