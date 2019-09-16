@@ -17,7 +17,8 @@ class oopDesc {
 ```
 Ordinary Object Pointer serves as a simple C++ Pointer, that points to Java object/instance in memory.   
 
-For the purpose of Java memory management, `oopDesc` is handled via `Handle` class (parent class for type-specific `Handles`, e.g. `instanceHandle`,`arrayHandle`,`objArrayHandle`,`typeArrayHandle`):
+For the purpose of Java memory management, `oopDesc` is handled via `Handle` class (parent class for type-specific `Handles`, e.g. `instanceHandle`,`arrayHandle`,`objArrayHandle`,`typeArrayHandle`).
+OOP `Handle` is just another layer of indirection for managing and updating OOP pointer during GC.
 ```C++
 // In order to preserve oops during garbage collection, they should be
 // allocated and passed around via Handles within the VM. A handle is
@@ -41,7 +42,7 @@ class Handle {
   oop     obj() const          { return _handle == NULL ? (oop)NULL : *_handle; }
   oop     non_null_obj() const { assert(_handle != NULL, "resolving NULL handle"); return *_handle; }
 ```
-OOP `Handle` is just another layer of indirection for managing and updating OOP pointer during GC.
+
 
 
 
