@@ -1,1 +1,55 @@
-oop-classes.md
+#### Ordinary Object Pointer
+
+Behind the scene - the core class, that represents Java classes and instances is `oopDesc`, described in `share/oops/oop.hpp` (ordinary object pointer):   
+```C++
+// oopDesc is the top baseclass for objects classes. The {name}Desc classes describe
+// the format of Java objects so the fields can be accessed from C++.
+// oopDesc is abstract.
+class oopDesc {
+  friend class VMStructs;
+  friend class JVMCIVMStructs;
+ private:
+  volatile markOop _mark;
+  union _metadata {
+    Klass*      _klass;
+    narrowKlass _compressed_klass;
+  } _metadata;
+```
+Ordinary Object Pointer serves as a simple C++ Pointer, that points to Java object/instance in memory.   
+
+
+For the purpose of Java memory management, `oopDesc` is handled via `Handle` class (parent class for type-specific `Handles`, e.g. `instanceHandle`,`arrayHandle`,`objArrayHandle`,`typeArrayHandle`):
+```C++
+// In order to preserve oops during garbage collection, they should be
+// allocated and passed around via Handles within the VM. A handle is
+// simply an extra indirection allocated in a thread local handle area.
+//
+// A handle is a value object, so it can be passed around as a value, can
+// be used as a parameter w/o using &-passing, and can be returned as a
+// return value.
+//
+// Handles are specialized for different oop types to provide extra type
+// information and avoid unnecessary casting. For each oop type xxxOop
+// there is a corresponding handle called xxxHandle.
+//
+// Base class for all handles. Provides overloading of frequently
+// used operators for ease of use.
+class Handle {
+ private:
+  oop* _handle;
+
+ protected:
+  oop     obj() const          { return _handle == NULL ? (oop)NULL : *_handle; }
+  oop     non_null_obj() const { assert(_handle != NULL, "resolving NULL handle"); return *_handle; }
+```
+
+`// The markOop describes the header of an object.`   
+Every class object or corresponding class instance contains object's header `share/oops/markOop.hpp (class markOopDesc)`.   
+`// oopDesc is the top baseclass for object classes.`   
+The Java class object itself is described in `share/oops/oop.hpp (class oopDesc)`
+which consists of two `words`:  
+*mark word* `markOop _mark` and  
+*class word/pointer (describes the class)*   
+`// An instanceOop is an instance of a Java Class`   
+Class instance (i.e. plain java object) described in `share/oops/instanceOop.hpp (instanceOopDesc)`.   
+Since every ***Oop C++ class inherits oopDesc class - every class instance contains `markWord` and class pointer too.   
