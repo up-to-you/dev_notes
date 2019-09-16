@@ -35,12 +35,21 @@ Since every `***OopDesc` class inherits from `oopDesc` - every `oopDesc` child c
 3. Biased-lock flag - if biased-locking is enabled (enabled by default since java 7+)
 4. Lock state - current **lock mechanics**   
 
-`Klass*` pointer 
+`Klass*` points to struct, which represents *Class Object* (resides in metaspace), on the basis of which the *Class Instance* is instantiated. Some simple `***Oop`'s dispatch calls of virtual functions to their corresponding `Klass`. Therefore no need to store C++ virtual table Pointer in every Java Object.
+```C++
+// A Klass provides:
+//  1: language level class object (method dictionary etc.)
+//  2: provide vm dispatch behavior for the object
+// Both functions are combined into one C++ class.
 
-
-
-
-
+// One reason for the oop/klass dichotomy in the implementation is
+// that we don't want a C++ vtbl pointer in every object.  Thus,
+// normal oops don't have any virtual functions.  Instead, they
+// forward all "virtual" functions to their klass, which does have
+// a vtbl and does the C++ dispatch depending on the object's
+// actual type.  (See oop.inline.hpp for some of the forwarding code.)
+class Klass : public Metadata {
+```
 
 For the purpose of Java memory management, `oopDesc` is handled via `Handle` class (parent class for type-specific `Handles`, e.g. `instanceHandle`,`arrayHandle`,`objArrayHandle`,`typeArrayHandle`).
 OOP `Handle` is just another layer of indirection for managing and updating OOP pointer during GC.
