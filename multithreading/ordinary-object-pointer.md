@@ -16,12 +16,21 @@ class oopDesc {
   } _metadata;
 ```
 Ordinary Object Pointer serves as a simple C++ Pointer, that points to Java object/instance in memory.   
-`oopDesc` is a parent class for all "Java objects", such as `instanceOopDesc`, `markOopDesc`, `arrayOopDesc` etc.      
+`oopDesc` is a parent class for all "Java objects" (`instanceOopDesc`) and other `***OopDesc` classes: `markOopDesc`, `arrayOopDesc` etc.    
 Since every `***OopDesc` class inherits from `oopDesc` - every `oopDesc` child contains `markWord` and a `Klass*` pointer. 
 
 1. `markOopDesc` - represents header of any object. `markOopDesc` inherits from `oopDesc` (as mentioned in JVM comments - "for historical reasons") and at the same time `oopDesc` contains `markWord` of type `markOopDesc` that is actual object's header.
 2. `instanceOopDesc`  - is an instance of a Java Class.
 3.  `arrayOopDesc` - abstract baseclass for all arrays (e.g. `typeArrayOopDesc`,`objArrayOopDesc` etc.).
+
+
+`markWord` is not a real oop but just a word. Layout of bits in `markWord` depends on current **lock mechanics** (biased / lightweight / heavyweight), i.e. when object serves as a Monitor for Threads synchronization. For simple unlocked state, `markWord` laid out as:
+
+
+
+`` 
+
+
 
 For the purpose of Java memory management, `oopDesc` is handled via `Handle` class (parent class for type-specific `Handles`, e.g. `instanceHandle`,`arrayHandle`,`objArrayHandle`,`typeArrayHandle`).
 OOP `Handle` is just another layer of indirection for managing and updating OOP pointer during GC.
