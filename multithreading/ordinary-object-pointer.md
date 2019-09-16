@@ -1,6 +1,6 @@
 #### Ordinary Object Pointer
 
-Behind the scene - the core class, that represents Java classes and instances is `oopDesc`, described in `share/oops/oop.hpp` (ordinary object pointer):   
+Behind the scene - the core class, that represents Java classes and instances is `oopDesc`, described in `share/oops/oop.hpp` (ordinary object pointer):
 ```C++
 // oopDesc is the top baseclass for objects classes. The {name}Desc classes describe
 // the format of Java objects so the fields can be accessed from C++.
@@ -16,7 +16,6 @@ class oopDesc {
   } _metadata;
 ```
 Ordinary Object Pointer serves as a simple C++ Pointer, that points to Java object/instance in memory.   
-
 
 For the purpose of Java memory management, `oopDesc` is handled via `Handle` class (parent class for type-specific `Handles`, e.g. `instanceHandle`,`arrayHandle`,`objArrayHandle`,`typeArrayHandle`):
 ```C++
@@ -42,6 +41,9 @@ class Handle {
   oop     obj() const          { return _handle == NULL ? (oop)NULL : *_handle; }
   oop     non_null_obj() const { assert(_handle != NULL, "resolving NULL handle"); return *_handle; }
 ```
+OOP `Handle` is just another layer of indirection for managing and updating OOP pointer during GC.
+
+
 
 `// The markOop describes the header of an object.`   
 Every class object or corresponding class instance contains object's header `share/oops/markOop.hpp (class markOopDesc)`.   
