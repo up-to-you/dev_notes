@@ -24,11 +24,21 @@ Since every `***OopDesc` class inherits from `oopDesc` - every `oopDesc` child c
 3.  `arrayOopDesc` - abstract baseclass for all arrays (e.g. `typeArrayOopDesc`,`objArrayOopDesc` etc.).
 
 
-`markWord` is not a real oop but just a word. Layout of bits in `markWord` depends on current **lock mechanics** (biased / lightweight / heavyweight), i.e. when object serves as a Monitor for Threads synchronization. For simple unlocked state, `markWord` laid out as:
+`markWord` is not a real oop but just a word (64 bits). Layout of bits in `markWord` depends on current **lock mechanics** (biased / lightweight / heavyweight), i.e. when object serves as a Monitor for Threads synchronization. For simple unlocked state, `markWord` laid out as:
+
+|  unused   |   Identity hashcode |unused| age   | biased-lock flag | lock state |
+|-----------|---------------------|------|-------|------------------|------------|
+|  25 bits  |   31 bits           |1 bit | 4 bits|  1 bit           |   2 bits   |
+
+1. Identity hashcode - `System.identityHashCode(x)`
+2. Age - how many GC iterations does object survived
+3. Biased-lock flag - if biased-locking is enabled (enabled by default since java 7+)
+4. Lock state - current **lock mechanics**   
+
+`Klass*` pointer 
 
 
 
-`` 
 
 
 
