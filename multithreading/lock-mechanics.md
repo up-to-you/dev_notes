@@ -3,7 +3,7 @@
 
 `// The markOop describes the header of an object.`   
 Every class object or corresponding class instance contains object's header `share/oops/markOop.hpp (class markOopDesc)`.   
-`// oopDesc is the top baseclass for objects classes.`   
+`// oopDesc is the top baseclass for object classes.`   
 The Java class object itself is described in `share/oops/oop.hpp (class oopDesc)`
 which consists of two `words`:  
 *mark word* `markOop _mark` and  
