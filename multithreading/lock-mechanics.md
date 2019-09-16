@@ -235,10 +235,12 @@ There are only few positive conditions for further performing of Thin locking in
 | Fat/Heavyweight locked object : | Pointer to ObjectMonitor  |10 |
 | --------------------------- |:-------------:|--------:|
 
-When CAS-based synchronization during Lightweight Lock cause `Contention` (as described in point 3., since points 1.,2.  failed) - JVM switches to **Inflated Monitor** `share/runtime/synchronizer.cpp:365` (slow_enter):
-1. In `ObjectSynchronizer::inflate` (`share/runtime/synchronizer.cpp:1387`) function, JVM sets ... 
-2. 
+When CAS-based synchronization during Lightweight Lock cause `Contention` (as described in point 3., since points 1.,2.  failed) - JVM switches to **Inflated Monitor** `share/runtime/synchronizer.cpp:365` (`slow_enter`):
+1. In `ObjectSynchronizer::inflate` (`share/runtime/synchronizer.cpp:1387`) function, JVM sets a Pointer to fat `ObjectMonitor` and last two bits to `10` in a `markWord`, using CAS instruction.
+2. After atomic `inflate` operation was succeeded, JVM tries to acquire Monitor's fat lock `ObjectMonitor::enter`(`share/runtime/synchronizer.cpp:367`).
+3. In `ObjectMonitor::enter` JVM performs several attempts to acquire lock using SPIN-LOOP and CAS. If attempts failed, JVM performs expensive Platform-Specific `park()` system-call, which involves Platform Thread Scheduler, Context Switching, etc.
 
+??? cxq, EntryList, WaitSet
 
 ??? need to describe Adaptive Spinning Support
 
