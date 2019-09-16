@@ -16,6 +16,13 @@ class oopDesc {
   } _metadata;
 ```
 Ordinary Object Pointer serves as a simple C++ Pointer, that points to Java object/instance in memory.   
+`oopDesc` is a parent class for all "Java objects", such as `instanceOopDesc`, `markOopDesc`, `arrayOopDesc` etc.      
+Since every `***OopDesc` class inherits from `oopDesc` - every `oopDesc` child contains `markWord` and a `Klass*` pointer. 
+
+1. `markOopDesc` - represents header of any object. `markOopDesc` inherits from `oopDesc` and at the same time `oopDesc` contains `markWord` of type `markOopDesc` that is actual object's header.
+2. `` 
+3. 
+
 
 For the purpose of Java memory management, `oopDesc` is handled via `Handle` class (parent class for type-specific `Handles`, e.g. `instanceHandle`,`arrayHandle`,`objArrayHandle`,`typeArrayHandle`).
 OOP `Handle` is just another layer of indirection for managing and updating OOP pointer during GC.
@@ -48,11 +55,8 @@ class Handle {
 
 `// The markOop describes the header of an object.`   
 Every class object or corresponding class instance contains object's header `share/oops/markOop.hpp (class markOopDesc)`.   
-`// oopDesc is the top baseclass for object classes.`   
-The Java class object itself is described in `share/oops/oop.hpp (class oopDesc)`
-which consists of two `words`:  
-*mark word* `markOop _mark` and  
-*class word/pointer (describes the class)*   
+
+ 
 `// An instanceOop is an instance of a Java Class`   
 Class instance (i.e. plain java object) described in `share/oops/instanceOop.hpp (instanceOopDesc)`.   
-Since every ***Oop C++ class inherits oopDesc class - every class instance contains `markWord` and class pointer too.   
+  
