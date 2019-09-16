@@ -225,27 +225,20 @@ There are only few positive conditions for further performing of Thin locking in
 
 ### Lightweight lock (thin)  &nbsp;&rarr;&nbsp;  Heavyweight (Fat) lock
 
+`markWord` layouts during transition between Lighweight lock &rarr; Heavyweight lock  
 
+| Thin/Lightweight locked object : | Pointer to original header (markword)  |00 |
+| --------------------------- |:-------------:|--------:|
 
-*Source code samples:*    
-* **For Thin-lock** (lightweight, not biased, contention is not too high) : share/runtime/synchronizer::slow_enter.cpp:347  
-(CAS mechanics the same as for Biased-lock)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &darr; &darr; &darr;
 
-* **For Flat-lock** (Inflated - OS based) : share/runtime/objectMonitor.cpp:270  
-(CAS thread pointer, that currently is owning the lock, share/runtime/objectMonitor.hpp:152) 
+| Fat/Heavyweight locked object : | Pointer to ObjectMonitor  |10 |
+| --------------------------- |:-------------:|--------:|
 
+When CAS-based synchronization during Lightweight Lock cause `Contention` (as described in point 3., since points 1.,2.  failed) - JVM switches to **Inflated Monitor** `share/runtime/synchronizer.cpp:365` (slow_enter):
+1. In `ObjectSynchronizer::inflate` (`share/runtime/synchronizer.cpp:1387`) function, JVM sets ... 
+2. 
 
 
 ??? need to describe Adaptive Spinning Support
-
-
-
-There is another issue in threads synchronization called `Contention`.  
-`Contention` denotes the state, when multiple threads trying to access resource, that currently acquired and locked by another thread.  
-
-Having only **Mutex** on hand, there are only two common ways to achieve multithreaded synchronization:
-1. by using `futex` system-calls with `FUTEX_WAIT`, such that `contended` threads will be put to sleep and further thread awakening is costly.
-2. by simply spinning threads (Spin-Lock), such that `contended` threads will burn a lot of CPU cycles. Also, simple Spin-Lock may lead to Thread starvation.
-
-??? spin-wait
 
