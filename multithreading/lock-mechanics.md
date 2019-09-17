@@ -243,8 +243,8 @@ When CAS-based synchronization during Lightweight Lock cause `Contention` (as de
 **OS-based Thread parking is slow mostly for 3 reasons:**
 1. System-call for Thread parking is expensive, since, for the sake of execution some System/OS function - Processor needs to switch from `user mode` (user application) to `kernel mode` (system scope). In `user mode` Processor has access to dedicated virtual address space specifically for current User Application. `User mode` forbids Processor for any access to kernel virtual address space, since errors in kernel space may lead to OS crash. For the sake of System-call - Processor switches from `user mode` to `kernel mode`, executes System/OS function and switches back to `user mode` again for further execution of Application.
 
-2. Thread Scheduler
-3. Context Switching
+2. Thread Scheduler - `unpark()` is not deterministic.
+3. Context Switching - memory (Thread Stack) copy between virtual address spaces.
 
 ??? cxq, EntryList, WaitSet
 
