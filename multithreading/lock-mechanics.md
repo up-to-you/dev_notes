@@ -240,9 +240,11 @@ When CAS-based synchronization during Lightweight Lock cause `Contention` (as de
 2. After atomic `inflate` operation was succeeded, JVM tries to acquire Monitor's fat lock `ObjectMonitor::enter`(`share/runtime/synchronizer.cpp:367`).
 3. In `ObjectMonitor::enter` JVM performs several attempts to acquire lock using SPIN-LOOP and CAS. If attempts failed, JVM performs expensive Platform-Specific `os::PlatformEvent::park()` system-call, which involves Platform Thread Scheduler, Context Switching, etc. For Linux `os::PlatformEvent::park()` function located at `os/posix/os_posix.cpp:1827`. 
 
-OS-based Thread parking is slow mostly for two reasons:
-1. Thread Scheduler
-2. Context Switching
+OS-based Thread parking is slow mostly for 3 reasons:
+1. System-call for Thread parking is expensive, since, for the sake of execution some System/OS function - Processor needs to switch from `user mode` (user application) to `kernel mode` (system scope). In `user mode` Processor has access to dedicated virtual address space specifically for current User Application. `User mode` forbids Processor for any access to kernel virtual address space, since errors in kernel space may lead to OS crash. For the sake of System-call - Processor switches from `user mode` to `kernel mode`, executes System/OS function and switches back to `user mode` again for further execution of Application.
+
+2. Thread Scheduler
+3. Context Switching
 
 ??? cxq, EntryList, WaitSet
 
