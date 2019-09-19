@@ -240,7 +240,7 @@ When CAS-based synchronization during Lightweight Lock cause `Contention` (as de
 2. After atomic `inflate` operation was succeeded, JVM tries to acquire Monitor's fat lock `ObjectMonitor::enter`(`share/runtime/synchronizer.cpp:367`).
 3. In `ObjectMonitor::enter` JVM performs several attempts to acquire lock using SPIN-LOOP and CAS. If attempts failed, JVM performs expensive Platform-Specific `os::PlatformEvent::park()` system-call, which involves Platform Thread Scheduler, Context Switching, etc. For Linux `os::PlatformEvent::park()` function located at `os/posix/os_posix.cpp:1827`. 
 
-**OS-based [Native Threads Synchronization](native-threads-sync.md) is slow**
+**OS-based [Native Threads Synchronization](native-threads-sync.md) is slow.**
 
 ??? cxq, EntryList, WaitSet
 
