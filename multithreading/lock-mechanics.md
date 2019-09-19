@@ -221,7 +221,7 @@ During Recursive locking, `stack pointer` is replaced with `NULL` (which denotes
 There are only few positive conditions for further performing of Thin locking in `slow_enter` function (`share/runtime/synchronizer.cpp:339`):  
 1. If current object's monitor is free, therefore CAS results in success (`original header` is replaced with `stack_pointer`)
 2. If object's monitor is not free, but the owner of the monitor is current Thread (recursive locking, `stack_pointer` is replaced with `NULL`).
-3. Otherwise, Monitor becomes inflated and switches to Fat locking, which in turn leverages the OS-based Threads synchronization via system calls.
+3. Otherwise, Monitor becomes inflated and switches to Fat locking, which in turn leverages the OS-based Threads synchronization (for `park()` / `unpark()` ops) via system calls.
 
 ### Lightweight lock (thin)  &nbsp;&rarr;&nbsp;  Heavyweight (Fat) lock
 
@@ -239,6 +239,8 @@ When CAS-based synchronization during Lightweight Lock cause `Contention` (as de
 1. In `ObjectSynchronizer::inflate` (`share/runtime/synchronizer.cpp:1387`) function, JVM sets a Pointer to fat `ObjectMonitor` and last two bits to `10` in a `markWord`, using CAS instruction.
 2. After atomic `inflate` operation was succeeded, JVM tries to acquire Monitor's fat lock `ObjectMonitor::enter`(`share/runtime/synchronizer.cpp:367`).
 3. In `ObjectMonitor::enter` JVM performs several attempts to acquire lock using SPIN-LOOP and CAS. If attempts failed, JVM performs expensive Platform-Specific `os::PlatformEvent::park()` system-call, which involves Platform Thread Scheduler, Context Switching, etc. For Linux `os::PlatformEvent::park()` function located at `os/posix/os_posix.cpp:1827`. 
+
+**OS-based [Native Threads Synchronization](native-threads-sync.md) is slow**
 
 ??? cxq, EntryList, WaitSet
 
