@@ -16,7 +16,7 @@ In scope of JVM, when `os::PlatformEvent::park()` is invoked - JVM uses POSIX (f
 |___________________________________________|___________________________|
 
 
-                U  S  E  R      M  O  D  E      R  A  M      
+               U  S  E  R      M  O  D  E      S  P  A  C  E      
  ________________________________________________________________________
 |           |     user stack       |                         |           | 
 |  .......  |local vars, args, etc.|                         |  .......  |
@@ -24,7 +24,7 @@ In scope of JVM, when `os::PlatformEvent::park()` is invoked - JVM uses POSIX (f
                      Specific Process/Application RAM              
 
          
-     K  E  R  N  E  L      M  O  D  E      R  A  M      
+  K  E  R  N  E  L      M  O  D  E      S  P  A  C  E      
  ______________________________________________________
 |          kernel stack          |                     |
 | stack pointer| cpu regs values |      .........      |
