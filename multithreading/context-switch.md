@@ -40,7 +40,7 @@ In scope of JVM, when `os::PlatformEvent::park()` is invoked - JVM uses POSIX (f
 
 #### CPU registers and TCB
 
-1. `TCB` actually is a data structure (`struct task_struct` in Linux kernel), which contains Thread's `Kernel stack` and related Thread's system data. `TCB` is located in `Kernel space` and consists of:
+1. `TCB` actually is a data structure (`struct task_struct` in Linux kernel https://github.com/torvalds/linux/blob/master/include/linux/sched.h), which contains Thread's `Kernel stack` and related Thread's system data. `TCB` is located in `Kernel space` and consists of:
    * Thread Identifier: Unique id (TID)
    * Stack Pointer to `User stack` ("interrupt" frame)
    * Program Counter: points to the **current** program instruction of the thread
