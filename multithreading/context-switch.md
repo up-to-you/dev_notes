@@ -10,26 +10,28 @@ In scope of JVM, when `os::PlatformEvent::park()` is invoked - JVM uses POSIX (f
 2. In `Kernel mode` OS saves values from CPU registers (Program Counter, Stack Pointer, etc.) to Thread's `Kernel stack` and Thread Control Block (`TCB`). In fact, `Kernel stack` allocated as part of `TCB`. Actually, when Thread crosses into `Kernel mode` the `Kernel Stack` for this Thread is empty, since every time Thread goes back from `Kernel mode` to `User mode` the `Kernel Stack` get cleaned.
 3. On the top of the `Kernel stack` there is so-called "interrupt" stack frame in which the value of `User mode` Stack Pointer is stored. This allows the Thread to store the point of user's execution state when it comes back from `Kernel mode` to `User mode`. The figure below depicts the state of stack parts at this point.  
 ```C
-                      W  H  O  L  E      R  A  M
- _______________________________________________________________________
-|        user mode address space            | kernel mode address space |
-|___________________________________________|___________________________|
+                             W  H  O  L  E      R  A  M
+ _________________________________________________________________________________
+|        user mode address space                      | kernel mode address space |
+|_____________________________________________________|___________________________|
 
 
-               U  S  E  R      M  O  D  E      S  P  A  C  E      
- ________________________________________________________________________
-|           |     user stack       |                         |           | 
-|  .......  |local vars, args, etc.|                         |  .......  |
-|___________|______________________|_________________________|___________| 
-                Specific Process/Application virtual space              
+                     U  S  E  R      M  O  D  E      S  P  A  C  E      
+ _________________________________________________________________________________
+|                 |     user stack       |                         |              | 
+|     .......     |local vars, args, etc.|                         |    ......    |
+|_________________|______________________|_________________________|______________| 
+                      Specific Process/Application virtual space              
 
          
-  K  E  R  N  E  L      M  O  D  E      S  P  A  C  E      
- ______________________________________________________
-|          kernel stack          |                     |
-| stack pointer| cpu regs values |      .........      |
-|______________|_________________|_____________________|
-interrupt frame             
+            K  E  R  N  E  L      M  O  D  E      S  P  A  C  E      
+ _______________________________________________________________________
+|          kernel stack           |              |                      |
+| stack pointer | cpu regs values |              |       .........      |
+|_______________|_________________|______________|______________________|
+|interrupt frame|                                |
+|               |                                | 
+|              T C B (task_struct)               |             
 ```
 4.  
 
