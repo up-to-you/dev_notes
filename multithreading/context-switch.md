@@ -7,7 +7,7 @@ In scope of JVM, when `os::PlatformEvent::park()` is invoked - JVM uses POSIX (f
    
    `User` and `Kernel` stacks are separated for the same security and stability reasons as `mode`'s address spaces.   
    So, the first step that the operating system takes is switching between `User mode` to `Kernel mode`. 
-2. In `Kernel mode` OS saves values from CPU registers (Program Counter, Stack Pointer, etc.) to Thread's `Kernel stack` and Thread Control Block (`TCB`). Actually, when Thread crosses into `Kernel mode` the `Kernel Stack` for this Thread is empty, since every time Thread goes back from `Kernel mode` to `User mode` the `Kernel Stack` get cleaned.
+2. In `Kernel mode` OS saves values from CPU registers (Program Counter, Stack Pointer, etc.) to Thread's `Kernel stack` and Thread Control Block (`TCB`). In fact, `Kernel stack` allocated as part of `TCB`. Actually, when Thread crosses into `Kernel mode` the `Kernel Stack` for this Thread is empty, since every time Thread goes back from `Kernel mode` to `User mode` the `Kernel Stack` get cleaned.
 3. On the top of the `Kernel stack` there is so-called "interrupt" stack frame in which the value of `User mode` Stack Pointer is stored. This allows the Thread to store the point of user's execution state when it comes back from `Kernel mode` to `User mode`. The figure below depicts the state of stack parts at this point.  
 ```C
                       W  H  O  L  E      R  A  M
