@@ -37,3 +37,11 @@ interrupt frame
 // OS Kernel saves `Thread Context` that consists of data stored on CPU registers into the dedicated place in memory (kernel stack).
 
 #### CPU registers and TCB
+
+1. `TCB` actually is a data structure (`struct task_struct` in Linux kernel), which contains Thread's `Kernel stack` and related Thread's system data. `TCB` is located in `Kernel space`. Consists of:
+   * Thread Identifier: Unique id (TID)
+   * Stack Pointer to `User stack` ("interrupt" frame)
+   * Program Counter: points to the **current** program instruction of the thread
+   * State of the thread (running, ready, waiting...)
+   * CPU registers values
+   * Pointer to the Process Control Block (PCB) of the process that the thread lives on
