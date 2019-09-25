@@ -35,7 +35,7 @@ In scope of JVM, when `os::PlatformEvent::park()` is invoked - JVM uses POSIX (f
 ```
 4. When it comes for switching back from `Kernel mode` to `User mode` - OS restores CPU registers values from `TCB / Kernel stack` back to CPU, including Stack Pointer to continue the Thread in `User mode` from the actual point. Immediately after all CPU values were restored the `Kernel stack` get cleaned. 
 
-#### CPU registers and TCB
+#### TCB
 
 1. `TCB` actually is a data structure (`struct task_struct` in Linux kernel https://github.com/torvalds/linux/blob/master/include/linux/sched.h), which contains Thread's `Kernel stack` and related Thread's system data. `TCB` is located in `Kernel space` and consists of:
    * Thread Identifier: Unique id (TID)
@@ -44,3 +44,5 @@ In scope of JVM, when `os::PlatformEvent::park()` is invoked - JVM uses POSIX (f
    * State of the thread (running, ready, waiting...)
    * CPU registers values
    * Pointer to the Process Control Block (PCB) of the process that the thread lives on
+   
+#### CPU registers
