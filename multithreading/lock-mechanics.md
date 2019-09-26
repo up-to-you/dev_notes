@@ -235,15 +235,35 @@ There are only few positive conditions for further performing of Thin locking in
 | Fat/Heavyweight locked object : | Pointer to ObjectMonitor  |10 |
 | --------------------------- |:-------------:|--------:|
 
-When CAS-based synchronization during Lightweight Lock cause `Contention` (as described in point 3., since points 1.,2.  failed) - JVM switches to **Inflated Monitor** `share/runtime/synchronizer.cpp:365` (`slow_enter`):
+When CAS-based synchronization during Lightweight Lock cause `Contention` (as described in point 3. above, since points 1.,2.  failed) - JVM switches to **Inflated Monitor** `share/runtime/synchronizer.cpp:365` (`slow_enter`):
 1. In `ObjectSynchronizer::inflate` (`share/runtime/synchronizer.cpp:1387`) function, JVM sets a Pointer to fat `ObjectMonitor` and last two bits to `10` in a `markWord`, using CAS instruction.
 2. After atomic `inflate` operation was succeeded, JVM tries to acquire Monitor's fat lock `ObjectMonitor::enter`(`share/runtime/synchronizer.cpp:367`).
-3. In `ObjectMonitor::enter` JVM performs several attempts to acquire lock using SPIN-LOOP and CAS. If attempts failed, JVM performs expensive Platform-Specific `os::PlatformEvent::park()` system-call, which involves Platform Thread Scheduler, Context Switching, etc. For Linux `os::PlatformEvent::park()` function located at `os/posix/os_posix.cpp:1827`. 
+3. In a nutshell, in function `ObjectMonitor::enter` JVM performs several attempts to acquire lock using SPIN-LOOP and CAS (actually in `ObjectMonitor::EnterI`). If attempts failed, JVM performs expensive Platform-Specific `os::PlatformEvent::park()` system-call, which involves Platform Thread Scheduler, Context Switching, etc. For Linux `os::PlatformEvent::park()` function located at `os/posix/os_posix.cpp:1827`. 
 
 **OS-based native Threads synchronization is slow mostly for 3 reasons:**
 1. System-call for Thread parking is expensive, since, for the sake of execution some System/OS function - Processor needs to switch from `user mode` (user application) to `kernel mode` (system scope). In `user mode` Processor has access to dedicated virtual address space specifically for current User Application. `User mode` forbids Processor for any access to kernel virtual address space, since errors in kernel space may lead to OS crash. For the sake of System-call - Processor switches from `user mode` to `kernel mode`, executes System/OS function and switches back to `user mode` again for further execution of Application.
 2. `unpark()` time is not deterministic, due to OS Thread Scheduler mechanics. After `unpark()` System-call was invoked, it may take a long time for actual Thread awakening, as there could be other busy Threads in OS, which Scheduler can decide to execute instead of those currently requested for awakening.
 3. For switching between native Threads OS performs so-called **[Context Switch and it's fairly expensive procedure](context-switch.md)**.
+
+Cooperation mechanics in `Object Monitor` are implemented via three collections: **`cxq`, `EntryList`, `WaitSet`**.
+1. When `ObjectMonitor::enter` function invokes `ObjectMonitor::EnterI`(`share/runtime/objectMonitor.cpp:442`) the Thread is trying to acquire lock by SPINNING. If SPIN failed, the Thread enqueue itself into **`cxq`** Linked List. After that, the Thread also parks itself `share/runtime/objectMonitor.cpp:562`:
+```C++
+  // We try one round of spinning *before* enqueueing Self.
+  //
+  // If the _owner is ready but OFFPROC we could use a YieldTo()
+  // operation to donate the remainder of this thread's quantum
+  // to the owner.  This has subtle but beneficial affinity
+  // effects.
+
+  if (TrySpin (Self) > 0) {
+    assert(_owner == Self, "invariant");
+    assert(_succ != Self, "invariant");
+    assert(_Responsible != Self, "invariant");
+    return;
+  }
+
+  // The Spin failed -- Enqueue and park the thread ...
+```
 
 ??? cxq, EntryList, WaitSet
 
