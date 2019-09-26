@@ -265,7 +265,7 @@ Cooperation mechanics in `Object Monitor` are implemented via three collections:
      // The Spin failed -- Enqueue and park the thread ...
    ```
    After that, the Thread also `park()` itself `share/runtime/objectMonitor.cpp:562`.
-2. **`cxq`** and **`EntryList`** actually serves as a single logical queue of Threads, that failed to acquire the lock. **`cxq`** is a set of Recently Arrived Threads attempting to acquire the lock. At unlock-time the Thread, that currently worked right now and performs unlock checks if **`EntryList`** is empty but **`cxq`** is not, thus *draining* **`cxq`** into **`EntryList`**.  Michael Scott's "2Q" algorithm
+2. **`cxq`** and **`EntryList`** actually serves as a single logical queue of Threads, that failed to acquire the lock. **`cxq`** is a set of Recently Arrived Threads attempting to acquire the lock. At unlock-time the Thread, that finished working with synchronized block and performs unlock right now - checks if **`EntryList`** is empty but **`cxq`** is not, thus *draining* **`cxq`** Threads into **`EntryList`**.  Michael Scott's "2Q" algorithm
 3. 
 
 ??? need to describe Adaptive Spinning Support
