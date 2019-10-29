@@ -7,14 +7,17 @@ Primarily, it includes:
 2. `Record algorithm` for encrypting outgoing and decrypting incoming messages using `Symmetric` `Session Key` obtained during `Handshake` (`Handshake` step uses `Asymmetric` Public/Private keys).
 
 So, in order to provide secure Client/Server interaction, there must be two steps involved:
-1. Verify server identity, using Asymmetric Public/Private key. !!! ...
-2. Encrypt/Decrypt netowork messages, using Symmetric single key. !!! ...
+1. Verify server identity (`Handshake`), using Asymmetric Public/Private key. This step can be done using so-called **PKI** which relies on `Certificate`'s.
+2. Encrypt/Decrypt netowork messages, using Symmetric single key. After `Handshake` slow `Asymmetric` approach is replaced by efficient and fast `Symmetric` encryption.
 
-**TLS** is based on Public/Private key 
+**PKI:**   
+...
 
+**Certificates are divided on CA and Self-Signed certificates:**   
+...
 
-### ? Symmetric Key vs Asymmetric Key ?
+**Symmetric Key vs Asymmetric Key encryption:**   
+...
 
-
-### CA Certificate
-### Self-Signed certificate
+**Common Handshake algorithm:**   
+...
