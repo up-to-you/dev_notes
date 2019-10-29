@@ -1,8 +1,20 @@
 ### TLS
-TLS (Transport Layer Security) is a network protocol evolved from SSL (Secure Sockets Layer).   
-It operates directly on top of TCP and extensively utilized by HTTPS transport protocol.
+**TLS** (Transport Layer Security) is a secure network protocol evolved from SSL (Secure Sockets Layer). **TLS** allow to establish secure communication channel between Client and the Server. It operates directly on top of TCP and extensively utilized by HTTPS transport protocol.
 
 Primarily, it includes:
 1. Conversational algorithm named `Handshake` to establish server identity - `Server Authentication`.   
-`Handshake` also may include `Client Authentication` to forbid the access for untrusted clients.
-2. Record algorithm for encrypting outgoing and decrypting incoming messages using `Symmetric` `Session Key` obtained during `Handshake`.
+`Handshake` also may include `Client Authentication` to forbid the access to server for untrusted clients.
+2. `Record algorithm` for encrypting outgoing and decrypting incoming messages using `Symmetric` `Session Key` obtained during `Handshake` (`Handshake` step uses `Asymmetric` Public/Private keys).
+
+So, in order to provide secure Client/Server interaction, there must be two steps involved:
+1. Verify server identity, using Asymmetric Public/Private key. !!! ...
+2. Encrypt/Decrypt netowork messages, using Symmetric single key. !!! ...
+
+**TLS** is based on Public/Private key 
+
+
+### ? Symmetric Key vs Asymmetric Key ?
+
+
+### CA Certificate
+### Self-Signed certificate
