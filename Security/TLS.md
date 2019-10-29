@@ -8,7 +8,7 @@ Primarily, it includes:
 
 So, in order to provide secure Client/Server interaction, there must be two steps involved:
 1. Verify server identity (`Handshake`), using Asymmetric Public/Private key. This step can be done using so-called **PKI** which relies on `Certificate`'s.
-2. Encrypt/Decrypt netowork messages, using Symmetric single key. After `Handshake` slow `Asymmetric` approach is replaced by efficient and fast `Symmetric` encryption.
+2. Encrypt/Decrypt network messages, using Symmetric single key. After `Handshake` the slow `Asymmetric` approach is replaced by efficient and fast `Symmetric` encryption.
 
 **PKI:**   
 ...
