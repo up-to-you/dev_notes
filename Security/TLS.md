@@ -11,7 +11,7 @@ So, in order to provide secure Client/Server interaction, there must be two step
 2. Encrypt/Decrypt network messages, using Symmetric single key. After `Handshake` the slow `Asymmetric` approach is replaced by efficient and fast `Symmetric` encryption.
 
 **PKI** (Public Key Infrastructure) :   
-designates the class of cryptographic algorithms and approaches. Includes the following encryption tools:
+designates the class of cryptographic algorithms and approaches. Includes the following encryption and signing techniques:
 - Certificate
 - Asymmetric encryption algorithm
 - Key exchange algorithm (based on `Key Pair`)
