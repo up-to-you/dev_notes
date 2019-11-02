@@ -17,11 +17,12 @@ designates the class of cryptographic algorithms and approaches. Includes the fo
 - Key exchange algorithm (based on `Key Pair`)
 
 Mathematical relation of `Key Pair` is as follow:   
-
-
-
 **Public Key** can be used to encrypt message, while only corresponding **Private Key** can decrypt it.   
 **Private Key** can also be used to `sign` message, while only corresponding **Public Key** can verify, that the message was indeed signed by the owner of **Private Key**.
+
+RSA:
+
+<img src="assets/RSA.png" width="70%" height="70%">
 
 
 **Certificates are divided on CA and Self-Signed certificates:**   
