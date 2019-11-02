@@ -23,10 +23,11 @@ Mathematical relation of `Key Pair` is as follow:
 **RSA** (Rivest–Shamir–Adleman) :   
 One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
 1. Participants exchange their public keys
-2. 
+2. Every participant uses opponent's `Public key` to encrypt outgoing message and his own `Private Key` to decrypt incoming message.
 
 <img src="assets/RSA.png" width="70%" height="70%">
 
+[The math behind RSA](rsa_math.md)
 
 **Certificates are divided on CA and Self-Signed certificates:**   
 ...
@@ -34,5 +35,5 @@ One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
 **Symmetric Key vs Asymmetric Key encryption:**   
 ...
 
-**Common Handshake algorithm:**   
+**Common TLS Handshake algorithm:**   
 ...
