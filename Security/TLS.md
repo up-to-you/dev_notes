@@ -20,7 +20,10 @@ Mathematical relation of `Key Pair` is as follow:
 **Public Key** can be used to encrypt message, while only corresponding **Private Key** can decrypt it.   
 **Private Key** can also be used to `sign` message, while only corresponding **Public Key** can verify, that the message was indeed signed by the owner of **Private Key**.
 
-RSA:
+**RSA** (Rivest–Shamir–Adleman) :   
+One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
+1. Participants exchange their public keys
+2. 
 
 <img src="assets/RSA.png" width="70%" height="70%">
 
