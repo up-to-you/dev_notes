@@ -27,7 +27,7 @@ One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
 
 <img src="assets/RSA.png" width="70%" height="70%">
 
-[The math behind RSA](rsa_math.md)
+[The Math behind RSA](rsa_math.md)
 
 **Certificates are divided on CA and Self-Signed certificates:**   
 ...
