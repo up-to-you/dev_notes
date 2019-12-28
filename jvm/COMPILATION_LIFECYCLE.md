@@ -48,15 +48,15 @@ public void setBar(java.lang.String);
    5:   return
 }
 ```
-_Example of bytecode mapping into Machine Instructions (opcodes) in hexidecimal format:_
+_Example of bytecode mapping into Machine Instructions (opcodes) in hexidecimal format (https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-7.html):_
 
 | Mnemonic        | Opcode (hex) | Description |
 | ------------- |-------------|------|
-| aload_0      | 2a | loads a reference onto the stack from local variable 0 |
-| invokespecial      | b7      |   invoke instance method on object reference requiring special handling (instance initialization method, a private method, or a superclass method), where the method is identified by method reference index in constant pool |
-| areturn | b0      |    returns a reference from a method |
-| getfield | b4      |    gets a field value of an object reference, where the field is identified by field reference in the constant pool index |
-| putfield | b5      |    `getfield` opposite  |
+| aload_0      | 0x2a | loads a reference onto the stack from local variable 0 |
+| invokespecial      | 0xb7      |   invoke instance method on object reference requiring special handling (instance initialization method, a private method, or a superclass method), where the method is identified by method reference index in constant pool |
+| areturn | 0xb0      |    returns a reference from a method |
+| getfield | 0xb4      |    gets a field value of an object reference, where the field is identified by field reference in the constant pool index |
+| putfield | 0xb5      |    `getfield` opposite  |
 
 
 **2.** &nbsp; ***Interpretation step***
