@@ -48,7 +48,9 @@ public void setBar(java.lang.String);
    5:   return
 }
 ```
-_Example of bytecode mapping into Machine Instructions (opcodes) in hexidecimal format (https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-7.html):_
+_Example of bytecode mapping into Machine Instructions (opcodes) in hexidecimal format (https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-7.html):_   
+`TODO: clarify bytecode/opcode/machine instructions translation in TemplateInterpreter`   
+(https://metebalci.com/blog/demystifying-the-jvm-jvm-variants-cppinterpreter-and-templateinterpreter/)   
 
 | Mnemonic        | Opcode (hex) | Description |
 | ------------- |-------------|------|
