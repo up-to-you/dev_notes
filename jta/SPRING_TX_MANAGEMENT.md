@@ -51,7 +51,7 @@ void invokeTransaction() {
 @Transactional(Propagation.NOT_SUPPORTED)
 void invokeInner() {
     var session = (Session) entityManager.getDelegate();
-    // Anything is ok, since there is Propagation.NOT_SUPPORTED, that suspends outer transaction
+    // Everything is ok, since there is Propagation.NOT_SUPPORTED, that suspends outer transaction
     session.beginTransaction();
     // Exception, since there is allready active transaction !
     session.beginTransaction();
