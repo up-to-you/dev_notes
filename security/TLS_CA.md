@@ -40,7 +40,7 @@ One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
 * Public key info   (Algorithm (e.g. RSA), Size, SHA1 Figerprint, Public key itself)
 
 **Certificates are divided on CA and Self-Signed certificates:**   
-...
+Self-Signed certificate simply differs by the issuer, i.e. while CA-certificate is issued by dedicated Central Authority, the Self-Signed one could be obtained // ** by another Key Pair ** //
 
 **Symmetric Key vs Asymmetric Key encryption:**   
 ...
