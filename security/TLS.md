@@ -6,9 +6,9 @@ Primarily, it includes:
 `Handshake` also may include `Client Authentication` to forbid the access to server for untrusted clients.
 2. `Record` algorithm to encrypt outgoing and decrypt incoming messages using `Symmetric` `Session Key`, obtained during `Handshake` (`Handshake` step uses `Asymmetric` Public/Private keys).
 
-So, in order to provide secure Client/Server interaction, there must be two steps involved:
-1. Verify server identity (`Handshake`), using Asymmetric Public/Private key. This step can be done using so-called **PKI** which relies on `Certificate`'s.
-2. Encrypt/Decrypt network messages, using Symmetric single key. After `Handshake` the slow `Asymmetric` approach is replaced by efficient and fast `Symmetric` encryption.
+So, in order to provide secure Client/Server interaction, there are two steps involved:
+1. Verify server identity (`Handshake`), using Asymmetric Public/Private key. This step can be done using so-called **PKI** which relies on signed `Certificate`'s.
+2. Encrypt/Decrypt network messages, using Symmetric single key (after `Handshake` the slow `Asymmetric` approach is replaced by efficient and fast `Symmetric` encryption).
 
 **PKI** (Public Key Infrastructure) :   
 designates the class of cryptographic algorithms and approaches. Includes the following encryption and signing techniques:
