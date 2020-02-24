@@ -30,8 +30,8 @@ One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
 ***[The Math behind RSA](RSA_MATH.ipynb)***
 
 **Certificate content:**   
-* Subject name (requresting server, cert owner)   
-* Issuer name (CA)   
+* Subject name (domain name of requresting server / cert owner)   
+* Issuer name (domain name of CA)   
 * Version   
 * Serial number
 * Not valid before (date)   
