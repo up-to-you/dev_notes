@@ -18,7 +18,7 @@ designates the class of cryptographic algorithms and approaches. Includes the fo
 
 Mathematical relation of `Key Pair` is as follow:   
 **Public Key** can be used to encrypt message, while only corresponding **Private Key** can decrypt it.   
-**Private Key** can also be used to `sign` message, while only corresponding **Public Key** can verify, that the message was indeed signed by the owner of **Private Key**.
+**Private Key** can also be used to `sign` message, while only corresponding **Public Key** can verify, that the message was indeed signed by the owner of **Private Key** (e.g. sign issued certificate with CA's private key and further verify it with public key).
 
 **RSA** (Rivest–Shamir–Adleman) :   
 One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
