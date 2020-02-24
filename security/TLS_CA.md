@@ -39,7 +39,8 @@ One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
 * Cert fingerprints (SHA1, MD5)   
 * Public key info   (Algorithm (e.g. RSA), Size, SHA1 Figerprint, Public key itself)
 
-**Certificates are divided on CA and Self-Signed certificates:**   
+**Certificates are divided on CA and Self-Signed certificates:**    
+
 Self-Signed certificate simply differs by the issuer, i.e. while CA-certificate is issued by dedicated Central Authority, the Self-Signed one could be obtained just using another own Key Pair without intervention of CA. It's a common approach for test purpose where certificate's owner controls the environment.
 
 **Symmetric Key vs Asymmetric Key encryption:**   
