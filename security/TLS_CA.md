@@ -29,6 +29,16 @@ One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
 
 ***[The Math behind RSA](RSA_MATH.ipynb)***
 
+**Certificate content:**   
+* Subject name (requresting server, cert owner)   
+* Issuer name (CA)   
+* Version   
+* Serial number
+* Not valid before (date)   
+* Not valid after (date)  
+* Cert fingerprints (SHA1, MD5)   
+* Public key info   (Algorithm (e.g. RSA), Size, SHA1 Figerprint, Public key itself)
+
 **Certificates are divided on CA and Self-Signed certificates:**   
 ...
 
