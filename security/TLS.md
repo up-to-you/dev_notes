@@ -2,9 +2,9 @@
 **TLS** (Transport Layer Security) is a secure network protocol evolved from SSL (Secure Sockets Layer). **TLS** allow to establish secure communication channel between Client and the Server. It operates directly on top of TCP and extensively utilized by HTTPS transport protocol.
 
 Primarily, it includes:
-1. Conversational algorithm named `Handshake` to establish server identity - `Server Authentication`.   
+1. `Conversational` algorithm named `Handshake` to establish server identity - `Server Authentication`.   
 `Handshake` also may include `Client Authentication` to forbid the access to server for untrusted clients.
-2. `Record algorithm` for encrypting outgoing and decrypting incoming messages using `Symmetric` `Session Key` obtained during `Handshake` (`Handshake` step uses `Asymmetric` Public/Private keys).
+2. `Record` algorithm to encrypt outgoing and decrypt incoming messages using `Symmetric` `Session Key`, obtained during `Handshake` (`Handshake` step uses `Asymmetric` Public/Private keys).
 
 So, in order to provide secure Client/Server interaction, there must be two steps involved:
 1. Verify server identity (`Handshake`), using Asymmetric Public/Private key. This step can be done using so-called **PKI** which relies on `Certificate`'s.
@@ -27,7 +27,7 @@ One of the commonly used `Asymmetric Encryption` algorithm, based on `Key Pair`.
 
 <img src="assets/RSA.png" width="70%" height="70%">
 
-***[The Math behind RSA](rsa_math.md)***
+***[The Math behind RSA](RSA_MATH.ipynb)***
 
 **Certificates are divided on CA and Self-Signed certificates:**   
 ...
