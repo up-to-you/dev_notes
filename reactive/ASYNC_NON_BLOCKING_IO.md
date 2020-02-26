@@ -8,6 +8,26 @@ _Synchronous Blocking I/O :_
         // have to wait while OS return all bytes, which file contains
         is.read(new byte[file.length()]);
 ```
+_or :_
+
+```java
+        var fileSize = 1024;
+        var channel = FileChannel.open("someFile");
+        ByteBuffer buffer = ByteBuffer.allocate(fileSize);
+
+        int bytes = channel.read(buffer);
+        
+        // check if file was fully readed
+        while((fileSize -= bytes) > 0) {
+            /*
+            * despite the fact, that Socket Channels in Java 
+            * could be configured to work in Non-blocking fashion,
+            * the FileChannel.read(...) operation is always blocking
+            */
+            bytes = channel.read(buffer);
+        }
+```
+
 _Synchronous Non-Blocking I/O :_
 ```java
     private static ServerSocketChannel serverSocketChannel;
@@ -96,26 +116,6 @@ _Synchronous Non-Blocking I/O :_
         throw new ClosedConnectionException(errorMsg);
     }
 ```
-```java
-        var fileSize = 1024;
-        var channel = FileChannel.open("someFile");
-        ByteBuffer buffer = ByteBuffer.allocate(fileSize);
-
-        int bytes = channel.read(buffer);
-        
-        // check if file was fully readed
-        while((fileSize -= bytes) > 0) {
-            /*
-            * do some another work, while OS delivers next chunk of file bytes,
-            * e.g. make some computations on allready delivered chunk of bytes.
-            *
-            * This allow to gain some performance benefits
-            * in contrast to reading all bytes and making all computations later.
-            */
-            bytes = channel.read(buffer);
-        }
-```
-
 _Asynchronous Non-Blocking I/O :_
 
 ```java
