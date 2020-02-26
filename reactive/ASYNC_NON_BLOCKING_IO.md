@@ -108,7 +108,9 @@ _Synchronous Non-Blocking I/O :_
     }
 
     private static void close(SelectionKey key) throws IOException {
-        var errorMsg = "Closed by: " + ((SocketChannel) key.channel()).socket().getRemoteSocketAddress();
+        var errorMsg = "Closed by: " + ((SocketChannel) key.channel()).socket()
+                        .getRemoteSocketAddress();
+
         key.channel().close();
         key.cancel();
         serverSocketChannel.close();
