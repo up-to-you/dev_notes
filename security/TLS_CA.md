@@ -46,9 +46,8 @@ Self-Signed certificate simply differs by the issuer, i.e. while CA-certificate 
 **Symmetric Key vs Asymmetric Key encryption:**   
 
 Comparing RSA (asymmetric) and AES-128 (128-bit symmetric) algorithms, there are several drawbacks of asymmetric encryption which makes symmetric one suitable for intensive secure communication:
-1. AES-128 
-2. 
-3. 
+1. _SIZE:_ RSA cipher increase the size of transferred data. 1024-bit cryptogram able to accommodate at most 688 bits of useful input data (i.e. payload requires almost 50% more space). Moreover RSA-128 always requires to send 1024 bits even for small input, since RSA output-size should always equals to the size of used `Modulus`, otherwise it will be weak for attacks. In comparison, by asymptotic estimate, AES doesn't enlarge the size of encrypted data.
+3. _SPEED:_
 
 **Common TLS Handshake algorithm:**   
 ...
